@@ -1,26 +1,211 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* =========================
+   THEME TOKENS
+   ========================= */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.75rem;
+
+  /* Background */
+  --background: #050914;
+  --foreground: #f8fafc;
+
+  /* Surfaces */
+  --card: #0b1220;
+  --card-foreground: #f8fafc;
+
+  --popover: #101827;
+  --popover-foreground: #f8fafc;
+
+  /* Main UI */
+  --primary: #a855f7;
+  --primary-foreground: #ffffff;
+
+  --secondary: #111a2b;
+  --secondary-foreground: #f8fafc;
+
+  --muted: #111827;
+  --muted-foreground: #94a3b8;
+
+  --accent: #162033;
+  --accent-foreground: #f8fafc;
+
+  --destructive: #ef4444;
+
+  /* Borders */
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #a855f7;
+
+  /* Your custom brand colors */
+  --brand-violet: #a855f7;
+  --brand-cyan: #22d3ee;
+  --brand-coral: #ff7a6b;
+  --brand-lime: #a3e635;
+
+  /* Portfolio surfaces */
+  --surface: #0b1220;
+  --surface-elevated: #101827;
 }
+
+/* Keep shadcn's dark token system available */
+.dark {
+  --background: #050914;
+  --foreground: #f8fafc;
+
+  --card: #0b1220;
+  --card-foreground: #f8fafc;
+
+  --popover: #101827;
+  --popover-foreground: #f8fafc;
+
+  --primary: #a855f7;
+  --primary-foreground: #ffffff;
+
+  --secondary: #111a2b;
+  --secondary-foreground: #f8fafc;
+
+  --muted: #111827;
+  --muted-foreground: #94a3b8;
+
+  --accent: #162033;
+  --accent-foreground: #f8fafc;
+
+  --destructive: #ef4444;
+
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #a855f7;
+
+  --brand-violet: #a855f7;
+  --brand-cyan: #22d3ee;
+  --brand-coral: #ff7a6b;
+  --brand-lime: #a3e635;
+
+  --surface: #0b1220;
+  --surface-elevated: #101827;
+}
+
+/* =========================
+   TAILWIND THEME MAPPING
+   ========================= */
 
 @theme inline {
+  /* shadcn */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Your custom colors */
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-coral: var(--brand-coral);
+  --color-brand-lime: var(--brand-lime);
+
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+
+  /* Fonts */
+  --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-dm-serif);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =========================
+   BASE STYLES
+   ========================= */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =========================
+   CUSTOM UTILITIES
+   ========================= */
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(
+      90deg,
+      var(--brand-violet),
+      var(--brand-cyan)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      );
+
+    background-size: 48px 48px;
+  }
+
+  .glow-violet {
+    box-shadow:
+      0 0 80px rgba(168, 85, 247, 0.12),
+      0 0 160px rgba(168, 85, 247, 0.06);
+  }
+
+  .glow-cyan {
+    box-shadow:
+      0 0 80px rgba(34, 211, 238, 0.12),
+      0 0 160px rgba(34, 211, 238, 0.06);
+  }
 }
