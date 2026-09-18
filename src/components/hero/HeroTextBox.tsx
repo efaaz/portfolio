@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import { ArrowRight } from "lucide-react";
 
 function HeroTextBox() {
   return (
@@ -33,7 +33,8 @@ function HeroTextBox() {
               className="bg-brand-violet shadow-2xl text-sm text-white px-5 py-3 rounded-full font-sans font-semibold hover:bg-brand-violet/50"
               href="/projects"
             >
-              View my works ➜
+              View my works
+               <ArrowRight className="inline-block ml-2 h-4 w-4" />
             </Link>
           </div>
           <div className="mt-9 sm:mt-0">
@@ -41,7 +42,8 @@ function HeroTextBox() {
               className="bg-background border border-brand-violet/70 text-sm text-white px-5 py-3 rounded-full font-sans font-semibold hover:bg-brand-violet/50"
               href="/writtings"
             >
-              Read my writing ➜
+              Read my writing 
+              <ArrowRight className="inline-block ml-2 h-4 w-4" />
             </Link>
           </div>
         </div>

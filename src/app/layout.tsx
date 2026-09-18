@@ -5,6 +5,7 @@ import {
   geistMono,
   dmSerif,
 } from "./fonts";
+import Navbar from "@/components/navigation/Navbar";
 
 export const metadata: Metadata = {
   title: "Efaz — Software Engineer",
@@ -18,7 +19,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geist.variable} ${geistMono.variable} ${dmSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        {children}
+        </body>
     </html>
   );
 }
