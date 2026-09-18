@@ -84,7 +84,7 @@
 
   --brand-violet: #a855f7;
   --brand-cyan: #22d3ee;
-  --brand-coral: #ff7a6b;
+  --brand-coral: #ffae6b;
   --brand-lime: #a3e635;
 
   --surface: #0b1220;
@@ -170,11 +170,21 @@
    ========================= */
 
 @layer utilities {
-  .text-gradient {
+  .text-gradient1 {
     background: linear-gradient(
-      90deg,
+      100deg,
       var(--brand-violet),
-      var(--brand-cyan)
+      var(--brand-lime)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient2 {
+    background: linear-gradient(
+      200deg,
+      var(--brand-lime),
+      var(--brand-coral)
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -208,4 +218,42 @@
       0 0 80px rgba(34, 211, 238, 0.12),
       0 0 160px rgba(34, 211, 238, 0.06);
   }
+}
+ /* moving orbit animation for profile image */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* floating animation for cards */
+.animate-floating {
+  animation: floating 5s ease-in-out infinite;
 }
