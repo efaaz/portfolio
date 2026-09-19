@@ -129,10 +129,10 @@ function ProfileOrbit() {
             sm:-right-36
           "
         >
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             <div
               className="
-                flex h-8 w-8 justify-center
+                flex h-8 w-8 items-center justify-center
                 rounded-lg
                 bg-brand-cyan/10
                 text-brand-cyan
@@ -219,7 +219,7 @@ function ProfileOrbit() {
               </p>
 
               <p className="mt-0.5 text-sm font-medium text-white">
-                System Design
+                Backend Architecture
               </p>
             </div>
           </div>
