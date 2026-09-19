@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import {
-  geist,
-  geistMono,
-  dmSerif,
-} from "./fonts";
+import { geist, geistMono, dmSerif } from "./fonts";
 import Navbar from "@/components/navigation/Navbar";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Efaz — Software Engineer",
@@ -22,7 +19,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         {children}
-        </body>
+        <Footer />
+      </body>
     </html>
   );
 }
