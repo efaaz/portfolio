@@ -48,24 +48,7 @@ export default function MobileNav() {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="
-          relative
-          flex
-          h-10
-          w-10
-          items-center
-          justify-center
-          rounded-xl
-          border
-          border-white/8
-          bg-white/4
-          text-foreground
-          transition-all
-          duration-200
-          hover:border-white/15
-          hover:bg-white/[0.07]
-        "
-      >
+        className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/8 bg-white/4 text-foreground transition-all duration-200 hover:border-white/15 hover:bg-white/[0.07]">
         {open ? <X size={19} /> : <Menu size={19} />}
       </button>
 
@@ -78,15 +61,7 @@ export default function MobileNav() {
               type="button"
               aria-label="Close menu"
               onClick={closeMenu}
-              className="
-                fixed
-                inset-0
-                top-18
-                z-40
-                cursor-default
-                bg-black/30
-                backdrop-blur-[2px]
-              "
+              className="fixed inset-0 top-18 z-40 cursor-default bg-black/30 backdrop-blur-[2px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

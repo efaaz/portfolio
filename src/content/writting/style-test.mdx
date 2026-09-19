@@ -1,0 +1,50 @@
+---
+title: "Style Test"
+description: "A mockup post to check custom MDX component styling."
+date: "2026-09-19"
+category: "Books"
+---
+
+# This Is An H1
+
+If your `h1` override is wired up, this line should be red and 48px — that's the exact placeholder from the docs example, easy to spot if it's *not* working.
+
+## A Custom H2
+
+This heading should have your `scroll-mt-24` and spacing from the override. Below it, an ordinary paragraph with a [custom-styled link](https://nextjs.org) — check that it picks up your emerald underline-on-hover instead of the browser default blue.
+
+### An Uncustomized H3
+
+This one isn't in your `components` map, so it should look like whatever the `prose` class gives it by default — useful to confirm the fallback still works.
+
+> This is a blockquote. It should have your emerald left border and not render in italics, since you explicitly turned that off in the override.
+
+Here's inline code you did **not** customize: `const hello = "world"`. It should be styled only by any `prose-code:` modifiers you added in Layer 1 — if you skipped that, it'll look like plain default `prose` code.
+
+Here's a fenced code block, which *is* customized via your `pre` override:
+
+```js
+function greet(name) {
+  return `Hello, ${name}!`
+}
+```
+
+An unordered list (default `prose` styling, not customized):
+
+- First item
+- Second item
+- Third item with `inline code`
+
+An ordered list:
+
+1. Step one
+2. Step two
+3. Step three
+
+<img src="/images/test-cover.jpg" alt="Placeholder cover image" width={800} height={450} />
+
+That last image tag needs a real file at `/public/images/test-cover.jpg` to actually load — if you don't have one handy yet, just delete that line for now; it's only there to confirm your `Image` override doesn't throw.
+
+## One More H2, For Good Measure
+
+Closing paragraph to check spacing between the last block and the end of the article.

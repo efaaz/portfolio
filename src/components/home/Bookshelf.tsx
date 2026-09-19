@@ -167,18 +167,6 @@ export default function Bookshelf() {
             pl-5
           "
         >
-          <span
-            className="
-              mt-1
-              h-1.5
-              w-1.5
-              shrink-0
-              rounded-full
-              bg-brand-cyan
-              shadow-[0_0_12px_rgba(34,211,238,0.7)]
-            "
-          />
-
           <p className="text-sm leading-6 text-muted-foreground">
             Reading isn't separate from my engineering work.
             It gives me different lenses for understanding

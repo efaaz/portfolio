@@ -5,9 +5,18 @@ import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Efaz — Software Engineer",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000",
+  ),
+
+  title: {
+    default: "Efaz — Software Engineer",
+    template: "%s | Efaz",
+  },
+
   description:
-    "Software engineer building useful software and exploring systems, technology, business, and human behavior.",
+    "Software engineer building web applications and exploring systems, technology, business, and human behavior.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
