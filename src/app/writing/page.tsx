@@ -1,10 +1,22 @@
 import { getAllPosts } from "@/lib/post";
 import WritingArchive from "@/components/writing/WritingArchive";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000",
+  ),
 
-export default function WritingPage() {
+  title: {
+    default: "Writing | Efaz",
+    template: "%s | Efaz",
+  },
+
+  description:
+    "Writing about software, systems, psychology, business, economics, books, and the ideas I find worth exploring.",
+};
+export default function Page() {
   const posts = getAllPosts();
-
-  // Only pass serializable data to the client component.
   const postSummaries = posts.map((post) => ({
     slug: post.slug,
     frontmatter: post.frontmatter,

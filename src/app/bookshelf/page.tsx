@@ -1,6 +1,22 @@
 import { getBooks } from "@/lib/books";
 import BookshelfArchive from "@/components/books/BookshelfArchive";
 import { BookType } from "@/data/books";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000",
+  ),
+
+  title: {
+    default: "Bookshelf | Efaz",
+    template: "%s | Efaz",
+  },
+
+  description:
+    "A collection of books I've read, am reading, or want to explore—mostly around psychology, economics, business, systems, technology, and human behavior",
+};
 
 export default function BookshelfPage() {
   const books = getBooks();
@@ -115,8 +131,7 @@ export default function BookshelfPage() {
             "
           >
             A collection of books I've read, am reading, or want to
-            explore—mostly around psychology, economics, business, systems,
-            technology, and human behavior.
+            explore—mostly around psychology, economics, business, systems, technology, and human behavior.
           </p>
         </header>
 

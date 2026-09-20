@@ -11,6 +11,22 @@ import {
 } from "lucide-react";
 
 import dp from "@/assets/images/about/landscape.jpg";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000",
+  ),
+
+  title: {
+    default: "About Me | Efaz",
+    template: "%s | Efaz",
+  },
+
+  description:
+    "I’m a Computer Science & Engineering student at American International University-Bangladesh who enjoys building practical software applications that pair clean user interfaces with maintainable, scalable backend logic.",
+};
 
 const journey = [
   {
