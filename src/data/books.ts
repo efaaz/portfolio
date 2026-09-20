@@ -9,6 +9,14 @@ export type BookType = {
   year?: number;
   cover?: string;
   readingYear?: number;
+
+  description?: string;
+  thoughts?: string;
+  whyIRead?: string;
+
+  relatedWritingSlugs?: string[];
+
+  featured?: boolean;
 };
 
 export const books: BookType[] = [
@@ -33,6 +41,21 @@ export const books: BookType[] = [
     status: "read",
     year: 2012,
     readingYear: 2026,
+
+    description:
+      "A book about systems that can benefit from volatility, randomness, and stress.",
+
+    whyIRead:
+      "I wanted to understand how systems behave under uncertainty and what makes some structures stronger when exposed to stress.",
+
+    thoughts:
+      "The idea that stayed with me most was that resilience isn't always about resisting uncertainty. Some systems can actually improve because of it.",
+
+    relatedWritingSlugs: [
+      "what-i-learned-from-antifragile",
+    ],
+
+    featured: true,
   },
   {
     slug: "laws-of-human-nature",
@@ -66,13 +89,28 @@ export const books: BookType[] = [
     status: "read",
     year: 2021,
     readingYear: 2024,
+    
+    description:
+      "Exploring the value of rethinking assumptions, opinions, and decisions.",
+
+    whyIRead:
+      "I was interested in how people update beliefs and make better decisions.",
+
+    thoughts:
+      "Good thinking isn't only about knowing more. It also requires being willing to reconsider what you already believe.",
+
+    relatedWritingSlugs: [
+      "rethinking-engineering-decisions",
+    ],
+
+    featured: true,
   },
 
   {
     slug: "algorithms-to-live-by",
     title: "Algorithms to Live By",
     author: "Brian Christian & Tom Griffiths",
-    isbn: "9780670068319",
+    isbn: "1250118360",
     category: "Technology",
     rating: 5,
     status: "reading",

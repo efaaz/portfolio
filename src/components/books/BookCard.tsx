@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import type { Book } from "@/data/books";
+import type { BookType } from "@/data/books";
 import { getBookCover } from "@/lib/books";
 
 type BookCardProps = {
-  book: Book;
+  book: BookType;
 };
 
 export default function BookCard({ book }: BookCardProps) {

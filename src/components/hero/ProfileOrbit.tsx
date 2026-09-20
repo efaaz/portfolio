@@ -102,7 +102,7 @@ function ProfileOrbit() {
             fill
             sizes="320px"
             className="object-contain grayscale"
-            priority
+            preload={true}
           />
 
           {/* Subtle image overlay */}
