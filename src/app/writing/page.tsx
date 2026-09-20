@@ -44,7 +44,7 @@ export default function WritingPage() {
       {/* Grid */}
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-20" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-28">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10 lg:py-10">
 
         {/* Header */}
         <header className="max-w-4xl">

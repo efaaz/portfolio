@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
 import { geist, geistMono, dmSerif } from "./fonts";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   ),
 
   title: {
-    default: "Efaz — Software Engineer",
+    default: "Wasifur Rahman Efaz — Software Engineer",
     template: "%s | Efaz",
   },
 

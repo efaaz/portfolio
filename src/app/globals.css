@@ -5,10 +5,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* =========================
-   THEME TOKENS
-   ========================= */
-
 :root {
   --radius: 0.75rem;
 
@@ -92,10 +88,6 @@
   --surface-elevated: #101827;
 }
 
-/* =========================
-   TAILWIND THEME MAPPING
-   ========================= */
-
 @theme inline {
   /* shadcn */
   --color-background: var(--background);
@@ -148,10 +140,6 @@
   --radius-3xl: calc(var(--radius) * 2.2);
 }
 
-/* =========================
-   BASE STYLES
-   ========================= */
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -165,10 +153,6 @@
     @apply bg-background text-foreground font-sans;
   }
 }
-
-/* =========================
-   CUSTOM UTILITIES
-   ========================= */
 
 @layer utilities {
   .text-gradient1 {
