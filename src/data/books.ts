@@ -1,14 +1,17 @@
-export type Book = {
+export type BookType = {
   slug: string;
   title: string;
   author: string;
-   isbn: string;
+  isbn: string;
   category: string;
   rating: number;
-  description?: string;
+  status: "read" | "reading" | "want-to-read";
+  year?: number;
+  cover?: string;
+  readingYear?: number;
 };
 
-export const books: Book[] = [
+export const books: BookType[] = [
   {
     slug: "thinking-fast-and-slow",
     title: "Thinking, Fast and Slow",
@@ -16,6 +19,9 @@ export const books: Book[] = [
     isbn: "0374275637",
     category: "Psychology",
     rating: 5,
+    status: "read",
+    year: 2011,
+    readingYear: 2026,
   },
   {
     slug: "antifragile",
@@ -24,6 +30,9 @@ export const books: Book[] = [
     isbn: "0812979680",
     category: "Systems",
     rating: 5,
+    status: "read",
+    year: 2012,
+    readingYear: 2026,
   },
   {
     slug: "laws-of-human-nature",
@@ -32,6 +41,9 @@ export const books: Book[] = [
     isbn: "978-0143111375",
     category: "Psychology",
     rating: 5,
+    status: "read",
+    year: 2012,
+    readingYear: 2025,
   },
   {
     slug: "atomic-habits",
@@ -40,6 +52,9 @@ export const books: Book[] = [
     isbn: "0735211299",
     category: "Behavior",
     rating: 4,
+    status: "read",
+    year: 2018,
+    readingYear: 2023,
   },
    {
     slug: "think-again",
@@ -48,6 +63,9 @@ export const books: Book[] = [
     isbn: "1984878107",
     category: "Psychology",
     rating: 5,
+    status: "read",
+    year: 2021,
+    readingYear: 2024,
   },
 
   {
@@ -57,6 +75,9 @@ export const books: Book[] = [
     isbn: "9780670068319",
     category: "Technology",
     rating: 5,
+    status: "reading",
+    year: 2016,
+    readingYear: 2026,
   },
 
   {
@@ -66,6 +87,9 @@ export const books: Book[] = [
     isbn: "9780465003495",
     category: "Economics",
     rating: 5,
+    status: "reading",
+    year: 2008,
+    readingYear: 2026,
   },
 
   {
@@ -75,15 +99,21 @@ export const books: Book[] = [
     isbn: "9781982167387",
     category: "Productivity",
     rating: 4,
+    status: "reading",
+    year: 2019,
+    readingYear: 2026,
   },
 
   {
     slug: "the-chaos-machine",
     title: "The Chaos Machine",
     author: "Max Fisher",
-    isbn: "9781529416404",
+    isbn: "0316703303",
     category: "Technology",
     rating: 4,
+    status: "reading",
+    year: 2023,
+    readingYear: 2026,
   },
 
   {
@@ -93,6 +123,9 @@ export const books: Book[] = [
     isbn: "9780593655047",
     category: "Psychology",
     rating: 4,
+    status: "read",
+    year: 2023,
+    readingYear: 2026,
   },
 
   {
@@ -102,6 +135,9 @@ export const books: Book[] = [
     isbn: "9780241965788",
     category: "Psychology",
     rating: 4,
+    status: "want-to-read",
+    year: 2014,
+    readingYear: 2026,
   },
 
   {
@@ -111,6 +147,9 @@ export const books: Book[] = [
     isbn: "9780349411910",
     category: "Productivity",
     rating: 5,
+    status: "read",
+    year: 2016,
+    readingYear: 2023,
   },
 
   {
@@ -120,6 +159,9 @@ export const books: Book[] = [
     isbn: "9780141034591",
     category: "Systems",
     rating: 5,
+    status: "want-to-read",
+    year: 2007,
+    readingYear: 2026,
   },
 
   {
@@ -129,6 +171,9 @@ export const books: Book[] = [
     isbn: "9780316451406",
     category: "Decision Making",
     rating: 5,
+    status: "want-to-read",
+    year: 2019,
+    readingYear: 2026,
   },
 
   {
@@ -138,15 +183,9 @@ export const books: Book[] = [
     isbn: "9781603580557",
     category: "Systems",
     rating: 5,
-  },
-
-  {
-    slug: "the-scout-mindset",
-    title: "The Scout Mindset",
-    author: "Julia Galef",
-    isbn: "9780735217553",
-    category: "Critical Thinking",
-    rating: 4,
+    status: "want-to-read",
+    year: 2008,
+    readingYear: 2026,
   },
 
   {
@@ -156,13 +195,8 @@ export const books: Book[] = [
     isbn: "9780857197689",
     category: "Finance",
     rating: 4,
-  },
-  {
-    slug: "psychology-of-money",
-    title: "The Psychology of Money",
-    author: "Morgan Housel",
-    isbn: "0374275637",
-    category: "Finance",
-    rating: 4,
+    status: "read",
+    year: 2020,
+    readingYear: 2024,
   },
 ];
