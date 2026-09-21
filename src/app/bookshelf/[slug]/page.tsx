@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft, ArrowUpRight, BookOpen, CalendarDays, Clock3, Star,} from "lucide-react";
+import { ArrowLeft, ArrowUpRight, BookOpen, CalendarDays, Clock3, Star,} from "lucide-react";
 import { notFound } from "next/navigation";
-
 import { getBookBySlug, getBookCover, getBooks } from "@/lib/books";
-
 import { getPostBySlug } from "@/lib/post";
+import { absoluteUrl } from "@/lib/site";
+import { JsonLd } from "@/app/json-ld";
 
 type PageProps = {
   params: Promise<{
@@ -74,10 +73,6 @@ export async function generateMetadata({
   };
 }
 
-/* =========================================================
-   PAGE
-========================================================= */
-
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
@@ -86,13 +81,6 @@ export default async function Page({ params }: PageProps) {
   if (!book) {
     notFound();
   }
-
-  /*
-   * Resolve related writing.
-   *
-   * The book stores only the article slugs.
-   * We retrieve the actual post data here.
-   */
   const relatedWriting =
     book.relatedWritingSlugs
       ?.map((writingSlug) => {
@@ -105,16 +93,67 @@ export default async function Page({ params }: PageProps) {
       .filter((post): post is NonNullable<typeof post> => post !== null) ?? [];
 
   const formattedYear = book.year ? String(book.year) : null;
+      const canonical = absoluteUrl(`/bookshelf/${book.slug}`);
 
+const bookSchema = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+
+  "@id": `${canonical}#book`,
+
+  name: book.title,
+
+  author: {
+    "@type": "Person",
+    name: book.author,
+  },
+
+  isbn: book.isbn,
+
+  url: canonical,
+
+  image: book.cover
+    ? absoluteUrl(book.cover)
+    : undefined,
+
+  description: book.description,
+
+  inLanguage: "en",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: absoluteUrl("/"),
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Bookshelf",
+      item: absoluteUrl("/bookshelf"),
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: book.title,
+      item: canonical,
+    },
+  ],
+};
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* =====================================================
-          BACKGROUND
-      ====================================================== */}
-
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="
+    <>
+      <JsonLd data={bookSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <main className="relative min-h-screen overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="
             absolute
             left-[5%]
             top-[5%]
@@ -721,5 +760,5 @@ export default async function Page({ params }: PageProps) {
         </section>
       </div>
     </main>
-  );
+  </>);
 }

@@ -3,89 +3,79 @@ import Image from "next/image";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
-
-import {
-  getAllSlugs,
-  getPostBySlug,
-} from "@/lib/post";
+import { useMDXComponents } from "@/app/mdx-component";
+import { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
+import { getPostBySlug, getPublishedSlugs } from "@/lib/post";
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  let post;
-
-  try {
-    post = getPostBySlug(slug);
-  } catch {
-    return {};
-  }
+  const post = getPostBySlug(slug);
 
   if (!post) {
     return {};
   }
 
-  const { title, description, date, category, cover } =
-    post.frontmatter;
-
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "http://localhost:3000";
-
-  const canonicalUrl = `${siteUrl}/writing/${slug}`;
+  const canonical = absoluteUrl(`/writing/${post.slug}`);
 
   return {
-    title,
-    description,
+    title: post.frontmatter.title,
+    description: post.frontmatter.description,
 
     alternates: {
-      canonical: canonicalUrl,
+      canonical,
     },
 
     authors: [
       {
         name: "Efaz",
+        url: absoluteUrl("/about"),
       },
     ],
 
     openGraph: {
       type: "article",
-      url: canonicalUrl,
-      title,
-      description,
-      siteName: "Efaz",
-      publishedTime: date,
-      authors: ["Efaz"],
-      section: category,
+      url: canonical,
+      title: post.frontmatter.title,
+      description: post.frontmatter.description,
 
-      ...(cover && {
-        images: [
-          {
-            url: cover,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
-        ],
-      }),
+      publishedTime: new Date(post.frontmatter.date).toISOString(),
+
+      authors: [absoluteUrl("/about")],
+
+      images: post.frontmatter.cover
+        ? [
+            {
+              url: absoluteUrl(post.frontmatter.cover),
+              alt: post.frontmatter.title,
+            },
+          ]
+        : [
+            {
+              url: absoluteUrl("/images/og/default.jpg"),
+              width: 1200,
+              height: 630,
+              alt: post.frontmatter.title,
+            },
+          ],
     },
 
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: post.frontmatter.title,
+      description: post.frontmatter.description,
 
-      ...(cover && {
-        images: [cover],
-      }),
+      images: [
+        post.frontmatter.cover
+          ? absoluteUrl(post.frontmatter.cover)
+          : absoluteUrl("/images/og/default.jpg"),
+      ],
     },
   };
 }
-import { useMDXComponents } from "@/app/mdx-component";
-import { Metadata } from "next";
 
 type PageProps = {
   params: Promise<{
@@ -93,8 +83,8 @@ type PageProps = {
   }>;
 };
 
-export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({
+export function generateStaticParams() {
+  return getPublishedSlugs().map((slug) => ({
     slug,
   }));
 }
@@ -197,7 +187,6 @@ export default async function Page({ params }: PageProps) {
                 group-hover:-translate-x-1
               "
             />
-
             Back to writing
           </Link>
         </div>
@@ -294,22 +283,19 @@ export default async function Page({ params }: PageProps) {
                 <div className="flex items-center gap-2">
                   <Clock size={13} />
 
-                  <span>
-                    {frontmatter.readingTime}
-                  </span>
+                  <span>{frontmatter.readingTime}</span>
                 </div>
               </>
             )}
           </div>
 
           {/* Tags */}
-          {frontmatter.tags &&
-            frontmatter.tags.length > 0 && (
-              <div className="mt-7 flex flex-wrap gap-2">
-                {frontmatter.tags.map((tag: string) => (
-                  <span
-                    key={tag}
-                    className="
+          {frontmatter.tags && frontmatter.tags.length > 0 && (
+            <div className="mt-7 flex flex-wrap gap-2">
+              {frontmatter.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="
                       rounded-full
                       border
                       border-white/8
@@ -319,12 +305,12 @@ export default async function Page({ params }: PageProps) {
                       text-[10px]
                       text-muted-foreground
                     "
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </header>
 
         {/* =====================================================
@@ -386,10 +372,7 @@ export default async function Page({ params }: PageProps) {
               sm:pt-12
             "
           >
-            <MDXRemote
-              source={post.content}
-              components={useMDXComponents()}
-            />
+            <MDXRemote source={post.content} components={useMDXComponents()} />
           </div>
 
           {/* =================================================
@@ -404,8 +387,8 @@ export default async function Page({ params }: PageProps) {
                 </p>
 
                 <p className="mt-2 text-sm text-muted-foreground/70">
-                  More ideas and notes on software, systems,
-                  and everything around them.
+                  More ideas and notes on software, systems, and everything
+                  around them.
                 </p>
               </div>
 
@@ -425,7 +408,6 @@ export default async function Page({ params }: PageProps) {
                 "
               >
                 Explore more writing
-
                 <ArrowUpRight
                   size={15}
                   className="

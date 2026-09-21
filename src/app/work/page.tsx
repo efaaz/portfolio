@@ -3,19 +3,24 @@ import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
 import WorkCard from "@/components/projects/WorkCard";
 import { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ??
-      "http://localhost:3000",
-  ),
+  title: "Work",
+  description:
+    "Selected software projects, applications, architecture decisions, and engineering case studies built by Efaz.",
 
-  title: {
-    default: "My Works",
-    template: "%s | Efaz",
+  alternates: {
+    canonical: absoluteUrl("/work"),
   },
 
-   description: "Selected software projects and products built by Efaz."
+  openGraph: {
+    title: "Work — Efaz",
+    description:
+      "Selected software projects and engineering case studies.",
+    url: absoluteUrl("/work"),
+    type: "website",
+  },
 };
 
 export default function WorkPage() {

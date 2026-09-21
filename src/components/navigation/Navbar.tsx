@@ -68,7 +68,7 @@ export default function Navbar() {
 
           {/* Resume */}
           <Link
-            href="/resume/Efaz-Rahman-CV.pdf"
+            href="https://drive.google.com/file/d/119EKO-zL3Tp2H4kYol3v1hsrRjLqxxIX/view?usp=sharing"
             target="_blank"
             className="
               group

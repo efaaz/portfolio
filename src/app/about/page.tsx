@@ -12,20 +12,31 @@ import {
 
 import dp from "@/assets/images/about/landscape.jpg";
 import { Metadata } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/site";
+import { JsonLd } from "../json-ld";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ??
-      "http://localhost:3000",
-  ),
+  title: "About",
+  description:
+    "Learn more about Efaz, a software engineer interested in web development, software architecture, psychology, business, economics, and systems.",
 
-  title: {
-    default: "About Me | Efaz",
-    template: "%s | Efaz",
+  alternates: {
+    canonical: absoluteUrl("/about"),
   },
 
-  description:
-    "I’m a Computer Science & Engineering student at American International University-Bangladesh who enjoys building practical software applications that pair clean user interfaces with maintainable, scalable backend logic.",
+  openGraph: {
+    title: "About Efaz — Software Engineer",
+    description:
+      "The story behind my work in software, technology, systems, psychology, and business.",
+    url: absoluteUrl("/about"),
+    type: "profile",
+    images: [
+      {
+        url: absoluteUrl("/images/about/landscape.jpg"),
+        alt: "About Efaz",
+      },
+    ],
+  },
 };
 
 const journey = [
@@ -97,15 +108,39 @@ const interests = [
 ];
 
 export default function AboutPage() {
+  const profileSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+
+    "@id": `${absoluteUrl("/about")}#profile`,
+
+    url: absoluteUrl("/about"),
+
+    name: "About Efaz",
+
+    mainEntity: {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      name: "Efaz",
+      url: absoluteUrl("/about"),
+      image: absoluteUrl("/images/profile/me.png"),
+      jobTitle: "Software Engineer",
+
+      sameAs: [siteConfig.social.github, siteConfig.social.linkedin],
+    },
+  };
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* =====================================================
+    <>
+      {" "}
+      <JsonLd data={profileSchema} />
+      <main className="relative min-h-screen overflow-hidden">
+        {/* =====================================================
           BACKGROUND
       ====================================================== */}
 
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="
             absolute
             left-[5%]
             top-[8%]
@@ -115,10 +150,10 @@ export default function AboutPage() {
             bg-brand-violet/4
             blur-[140px]
           "
-        />
+          />
 
-        <div
-          className="
+          <div
+            className="
             absolute
             right-[5%]
             top-[45%]
@@ -128,19 +163,19 @@ export default function AboutPage() {
             bg-brand-cyan/3
             blur-[130px]
           "
-        />
-      </div>
+          />
+        </div>
 
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-20" />
+        <div className="pointer-events-none absolute inset-0 bg-grid opacity-20" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
-        {/* ==================================================
+        <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+          {/* ==================================================
             HERO / LANDSCAPE
         ================================================== */}
 
-        <section className="pt-8 sm:pt-10">
-          <div
-            className="
+          <section className="pt-8 sm:pt-10">
+            <div
+              className="
               relative
               aspect-16/8
               overflow-hidden
@@ -150,20 +185,20 @@ export default function AboutPage() {
               bg-surface
               shadow-[0_30px_100px_rgba(0,0,0,0.3)]
             "
-          >
-            <Image
-              src={dp}
-              alt="Landscape"
-              fill
-              priority
-              quality={95}
-              sizes="(max-width: 1280px) 100vw, 1280px"
-              className="object-cover object-[50%_20%]"
-            />
+            >
+              <Image
+                src={dp}
+                alt="Landscape"
+                fill
+                priority
+                quality={95}
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover object-[50%_20%]"
+              />
 
-            {/* Dark overlay */}
-            <div
-              className="
+              {/* Dark overlay */}
+              <div
+                className="
                 absolute
                 inset-0
                 bg-linear-to-t
@@ -171,29 +206,29 @@ export default function AboutPage() {
                 via-[#050914]/45
                 to-[#050914]/10
               "
-            />
+              />
 
-            {/* Color glow */}
-            <div
-              className="
+              {/* Color glow */}
+              <div
+                className="
                 absolute
                 inset-0
                 bg-[radial-gradient(circle_at_20%_30%,rgba(168,85,247,0.16),transparent_30%),radial-gradient(circle_at_80%_60%,rgba(34,211,238,0.10),transparent_30%)]
               "
-            />
+              />
 
-            {/* Text */}
-            <div className="absolute inset-x-0 bottom-0 p-7 sm:p-10 lg:p-14">
-              <div className="flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
+              {/* Text */}
+              <div className="absolute inset-x-0 bottom-0 p-7 sm:p-10 lg:p-14">
+                <div className="flex items-center gap-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
 
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
-                  About me
-                </span>
-              </div>
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
+                    About me
+                  </span>
+                </div>
 
-              <h1
-                className="
+                <h1
+                  className="
                   mt-5
                   max-w-3xl
                   text-4xl
@@ -204,25 +239,25 @@ export default function AboutPage() {
                   sm:text-5xl
                   lg:text-7xl
                 "
-              >
-                The person
-                <br />
-                <span className="font-serif italic text-gradient">
-                  behind the software.
-                </span>
-              </h1>
+                >
+                  The person
+                  <br />
+                  <span className="font-serif italic text-gradient">
+                    behind the software.
+                  </span>
+                </h1>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ==================================================
+          {/* ==================================================
             QUOTE
         ================================================== */}
 
-        <section className="mx-auto max-w-5xl py-20 sm:py-24 lg:py-28">
-          <div className="flex gap-5 sm:gap-8">
-            <div
-              className="
+          <section className="mx-auto max-w-5xl py-20 sm:py-24 lg:py-28">
+            <div className="flex gap-5 sm:gap-8">
+              <div
+                className="
                 hidden
                 w-px
                 shrink-0
@@ -232,15 +267,15 @@ export default function AboutPage() {
                 to-transparent
                 sm:block
               "
-            />
+              />
 
-            <div>
-              <span className="font-serif text-5xl leading-none text-brand-violet">
-                “
-              </span>
+              <div>
+                <span className="font-serif text-5xl leading-none text-brand-violet">
+                  “
+                </span>
 
-              <blockquote
-                className="
+                <blockquote
+                  className="
                   mt-3
                   text-3xl
                   font-medium
@@ -250,125 +285,126 @@ export default function AboutPage() {
                   sm:text-4xl
                   lg:text-5xl
                 "
-              >
-                Anyone that suggests to me to do less is either not a real
-                friend or very confused.
-              </blockquote>
+                >
+                  Anyone that suggests to me to do less is either not a real
+                  friend or very confused.
+                </blockquote>
 
-              <div className="mt-7 flex items-center gap-3">
-                <div className="h-px w-8 bg-brand-violet/60" />
+                <div className="mt-7 flex items-center gap-3">
+                  <div className="h-px w-8 bg-brand-violet/60" />
 
-                <span className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Grant Cardone
-                </span>
+                  <span className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                    Grant Cardone
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ==================================================
+          {/* ==================================================
             ABOUT ME
         ================================================== */}
 
-        <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-            <div>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] tracking-[0.18em] text-brand-violet">
-                  01
-                </span>
+          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+            <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+              <div>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.18em] text-brand-violet">
+                    01
+                  </span>
 
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  About me
-                </span>
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                    About me
+                  </span>
+                </div>
+
+                <h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl">
+                  A little more
+                  <span className="font-serif italic text-gradient">
+                    {" "}
+                    context.
+                  </span>
+                </h2>
               </div>
 
-              <h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl">
-                A little more
-                <span className="font-serif italic text-gradient">
-                  {" "}
-                  context.
-                </span>
-              </h2>
+              <div className="max-w-3xl space-y-6 text-[16px] leading-8 text-muted-foreground sm:text-lg sm:leading-9">
+                <p>
+                  I’m a Computer Science & Engineering student at American
+                  International University-Bangladesh who enjoys building
+                  practical software applications that pair clean user
+                  interfaces with maintainable, scalable backend logic.
+                </p>
+
+                <p>
+                  My journey hasn't been as straightforward as it might appear.
+                  In 2018, while I was in 8th grade, I started learning
+                  programming with Python. At the time, there weren't many
+                  high-quality learning resources available online, so
+                  FreeCodeCamp became one of the places where I learned the
+                  fundamentals.
+                </p>
+
+                <p>
+                  I wanted to start building projects, but then I discovered web
+                  development and shifted toward HTML and CSS. In 2020, the
+                  pandemic disrupted my learning and academics. After that came
+                  family circumstances and increasing academic pressure, and
+                  coding temporarily moved into the background.
+                </p>
+
+                <p>
+                  Fast-forward to 2023. After completing my HSC, I had a few
+                  months before university started. I used that time to restart
+                  coding with a clear purpose: web development. I spent those
+                  months learning the MERN stack and then gradually expanded
+                  into backend development with Node.js, Express, and MongoDB.
+                </p>
+
+                <p>
+                  After enrolling in the CSE program at American International
+                  University Bangladesh, I continued learning beyond the
+                  academic curriculum. I've explored technologies such as
+                  FastAPI, MySQL, PostgreSQL, and software architecture while
+                  continuing to build projects on my own.
+                </p>
+              </div>
             </div>
+          </section>
 
-            <div className="max-w-3xl space-y-6 text-[16px] leading-8 text-muted-foreground sm:text-lg sm:leading-9">
-              <p>
-                I’m a Computer Science & Engineering student at American
-                International University-Bangladesh who enjoys building
-                practical software applications that pair clean user interfaces
-                with maintainable, scalable backend logic.
-              </p>
-
-              <p>
-                My journey hasn't been as straightforward as it might appear. In
-                2018, while I was in 8th grade, I started learning programming
-                with Python. At the time, there weren't many high-quality
-                learning resources available online, so FreeCodeCamp became one
-                of the places where I learned the fundamentals.
-              </p>
-
-              <p>
-                I wanted to start building projects, but then I discovered web
-                development and shifted toward HTML and CSS. In 2020, the
-                pandemic disrupted my learning and academics. After that came
-                family circumstances and increasing academic pressure, and
-                coding temporarily moved into the background.
-              </p>
-
-              <p>
-                Fast-forward to 2023. After completing my HSC, I had a few
-                months before university started. I used that time to restart
-                coding with a clear purpose: web development. I spent those
-                months learning the MERN stack and then gradually expanded into
-                backend development with Node.js, Express, and MongoDB.
-              </p>
-
-              <p>
-                After enrolling in the CSE program at American International
-                University Bangladesh, I continued learning beyond the academic
-                curriculum. I've explored technologies such as FastAPI, MySQL,
-                PostgreSQL, and software architecture while continuing to build
-                projects on my own.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ==================================================
+          {/* ==================================================
             JOURNEY
         ================================================== */}
 
-        <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-            <div>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] tracking-[0.18em] text-brand-cyan">
-                  02
-                </span>
+          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+            <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+              <div>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.18em] text-brand-cyan">
+                    02
+                  </span>
 
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  The journey
-                </span>
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                    The journey
+                  </span>
+                </div>
+
+                <h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl">
+                  Started with code.
+                  <br />
+                  <span className="font-serif italic text-gradient">
+                    Still evolving.
+                  </span>
+                </h2>
+
+                <p className="mt-6 max-w-sm text-sm leading-6 text-muted-foreground">
+                  The path wasn't linear. That's part of the story.
+                </p>
               </div>
 
-              <h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl">
-                Started with code.
-                <br />
-                <span className="font-serif italic text-gradient">
-                  Still evolving.
-                </span>
-              </h2>
-
-              <p className="mt-6 max-w-sm text-sm leading-6 text-muted-foreground">
-                The path wasn't linear. That's part of the story.
-              </p>
-            </div>
-
-            <div className="relative">
-              {/* Timeline */}
-              <div
-                className="
+              <div className="relative">
+                {/* Timeline */}
+                <div
+                  className="
                   absolute
                   bottom-6
                   left-1.75
@@ -379,14 +415,14 @@ export default function AboutPage() {
                   via-white/8
                   to-brand-violet/40
                 "
-              />
+                />
 
-              <div className="space-y-10">
-                {journey.map((item) => (
-                  <article key={item.year} className="relative pl-10">
-                    {/* Node */}
-                    <span
-                      className="
+                <div className="space-y-10">
+                  {journey.map((item) => (
+                    <article key={item.year} className="relative pl-10">
+                      {/* Node */}
+                      <span
+                        className="
                         absolute
                         left-0
                         top-1.5
@@ -397,85 +433,85 @@ export default function AboutPage() {
                         border-white/12
                         bg-[#050914]
                       "
-                    />
+                      />
 
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span
-                        className={`
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span
+                          className={`
                           font-mono
                           text-xs
                           tracking-[0.15em]
                           ${item.accent}
                         `}
-                      >
-                        {item.year}
-                      </span>
+                        >
+                          {item.year}
+                        </span>
 
-                      <span className="h-1 w-1 rounded-full bg-white/20" />
+                        <span className="h-1 w-1 rounded-full bg-white/20" />
 
-                      <h3 className="text-lg font-medium tracking-tight text-foreground">
-                        {item.title}
-                      </h3>
-                    </div>
+                        <h3 className="text-lg font-medium tracking-tight text-foreground">
+                          {item.title}
+                        </h3>
+                      </div>
 
-                    <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
-                      {item.text}
-                    </p>
-                  </article>
-                ))}
+                      <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-[15px]">
+                        {item.text}
+                      </p>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ==================================================
+          {/* ==================================================
             BEYOND CODE
         ================================================== */}
 
-        <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] tracking-[0.18em] text-brand-violet">
-                03
-              </span>
+          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[10px] tracking-[0.18em] text-brand-violet">
+                  03
+                </span>
 
-              <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                Beyond code
-              </span>
+                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                  Beyond code
+                </span>
+              </div>
+
+              <h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl lg:text-5xl">
+                I don't want my learning
+                <br />
+                to stop at{" "}
+                <span className="font-serif italic text-gradient">
+                  technology.
+                </span>
+              </h2>
+
+              <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+                I'm deeply interested in non-fiction, especially behavioural
+                economics, business management, organizational psychology,
+                decision-making, and systems. Since 2023, I've read almost 50
+                books across these areas.
+              </p>
+
+              <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+                Reading leads to writing for me. I write about ideas that catch
+                my attention and try to connect them back to software, users,
+                organizations, and the problems technology is supposed to solve.
+              </p>
             </div>
 
-            <h2 className="mt-5 text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl lg:text-5xl">
-              I don't want my learning
-              <br />
-              to stop at{" "}
-              <span className="font-serif italic text-gradient">
-                technology.
-              </span>
-            </h2>
+            {/* Interest cards */}
+            <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {interests.map((interest) => {
+                const Icon = interest.icon;
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-              I'm deeply interested in non-fiction, especially behavioural
-              economics, business management, organizational psychology,
-              decision-making, and systems. Since 2023, I've read almost 50
-              books across these areas.
-            </p>
-
-            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-              Reading leads to writing for me. I write about ideas that catch my
-              attention and try to connect them back to software, users,
-              organizations, and the problems technology is supposed to solve.
-            </p>
-          </div>
-
-          {/* Interest cards */}
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {interests.map((interest) => {
-              const Icon = interest.icon;
-
-              return (
-                <div
-                  key={interest.title}
-                  className="
+                return (
+                  <div
+                    key={interest.title}
+                    className="
                     group
                     rounded-2xl
                     border
@@ -488,9 +524,9 @@ export default function AboutPage() {
                     hover:border-white/13
                     hover:bg-white/[0.035]
                   "
-                >
-                  <div
-                    className={`
+                  >
+                    <div
+                      className={`
                       flex
                       h-9
                       w-9
@@ -500,30 +536,30 @@ export default function AboutPage() {
                       ${interest.bg}
                       ${interest.color}
                     `}
-                  >
-                    <Icon size={17} strokeWidth={1.7} />
+                    >
+                      <Icon size={17} strokeWidth={1.7} />
+                    </div>
+
+                    <h3 className="mt-5 text-base font-medium text-foreground">
+                      {interest.title}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {interest.description}
+                    </p>
                   </div>
+                );
+              })}
+            </div>
+          </section>
 
-                  <h3 className="mt-5 text-base font-medium text-foreground">
-                    {interest.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {interest.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ==================================================
+          {/* ==================================================
             BELIEF
         ================================================== */}
 
-        <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-          <div
-            className="
+          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+            <div
+              className="
               relative
               overflow-hidden
               rounded-3xl
@@ -534,10 +570,10 @@ export default function AboutPage() {
               sm:p-10
               lg:p-14
             "
-          >
-            {/* glow */}
-            <div
-              className="
+            >
+              {/* glow */}
+              <div
+                className="
                 pointer-events-none
                 absolute
                 -right-20
@@ -548,19 +584,19 @@ export default function AboutPage() {
                 bg-brand-violet/8
                 blur-[100px]
               "
-            />
+              />
 
-            <div className="relative">
-              <div className="flex items-center gap-3">
-                <Sparkles size={16} className="text-brand-violet" />
+              <div className="relative">
+                <div className="flex items-center gap-3">
+                  <Sparkles size={16} className="text-brand-violet" />
 
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  A belief I keep coming back to
-                </span>
-              </div>
+                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                    A belief I keep coming back to
+                  </span>
+                </div>
 
-              <h2
-                className="
+                <h2
+                  className="
                   mt-7
                   max-w-4xl
                   text-3xl
@@ -571,13 +607,13 @@ export default function AboutPage() {
                   sm:text-4xl
                   lg:text-5xl
                 "
-              >
-                In the age of AI, learning shouldn't stop at the boundary of one
-                discipline.
-              </h2>
+                >
+                  In the age of AI, learning shouldn't stop at the boundary of
+                  one discipline.
+                </h2>
 
-              <p
-                className="
+                <p
+                  className="
                   mt-6
                   max-w-3xl
                   text-base
@@ -585,41 +621,42 @@ export default function AboutPage() {
                   text-muted-foreground
                   sm:text-lg
                 "
-              >
-                I believe software engineers should stay curious about the world
-                around technology. Economics, business, psychology, and software
-                are not isolated subjects they influence one another. Learning
-                across these disciplines helps me understand people and problems
-                more deeply and, ultimately, build more useful products.
-              </p>
+                >
+                  I believe software engineers should stay curious about the
+                  world around technology. Economics, business, psychology, and
+                  software are not isolated subjects they influence one another.
+                  Learning across these disciplines helps me understand people
+                  and problems more deeply and, ultimately, build more useful
+                  products.
+                </p>
 
-              <div className="mt-8 flex items-center gap-3">
-                <div className="h-px w-12 bg-linear-to-r from-brand-violet to-brand-cyan" />
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="h-px w-12 bg-linear-to-r from-brand-violet to-brand-cyan" />
 
-                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                  Learn broadly · build thoughtfully
-                </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Learn broadly · build thoughtfully
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ==================================================
+          {/* ==================================================
             CTA
         ================================================== */}
 
-        <section className="border-t border-white/8 py-24 sm:py-28 lg:py-36">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
+          <section className="border-t border-white/8 py-24 sm:py-28 lg:py-36">
+            <div className="max-w-4xl">
+              <div className="flex items-center gap-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
 
-              <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                What's next
-              </span>
-            </div>
+                <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                  What's next
+                </span>
+              </div>
 
-            <h2
-              className="
+              <h2
+                className="
                 mt-7
                 text-4xl
                 font-semibold
@@ -628,23 +665,26 @@ export default function AboutPage() {
                 sm:text-5xl
                 lg:text-6xl
               "
-            >
-              Building, learning,
-              <br />
-              and looking for the next
-              <span className="font-serif italic text-gradient"> problem.</span>
-            </h2>
+              >
+                Building, learning,
+                <br />
+                and looking for the next
+                <span className="font-serif italic text-gradient">
+                  {" "}
+                  problem.
+                </span>
+              </h2>
 
-            <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              I'm available for internships, collaborations, and project work
-              that values thoughtful engineering, curiosity, and human centered
-              design.
-            </p>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+                I'm available for internships, collaborations, and project work
+                that values thoughtful engineering, curiosity, and human
+                centered design.
+              </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="mailto:rahmanefazwasifur@gmail.com"
-                className="
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="mailto:rahmanefazwasifur@gmail.com"
+                  className="
                   group
                   inline-flex
                   items-center
@@ -663,17 +703,17 @@ export default function AboutPage() {
                   hover:border-brand-violet/50
                   hover:bg-brand-violet/15
                 "
-              >
-                Get in touch
-                <ArrowUpRight
-                  size={15}
-                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </a>
+                >
+                  Get in touch
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </a>
 
-              <Link
-                href="/writing"
-                className="
+                <Link
+                  href="/writing"
+                  className="
                   inline-flex
                   items-center
                   gap-2
@@ -691,14 +731,15 @@ export default function AboutPage() {
                   hover:border-white/15
                   hover:text-foreground
                 "
-              >
-                Read my writing
-                <ArrowDownRight size={15} />
-              </Link>
+                >
+                  Read my writing
+                  <ArrowDownRight size={15} />
+                </Link>
+              </div>
             </div>
-          </div>
-        </section>
-      </div>
-    </main>
+          </section>
+        </div>
+      </main>
+    </>
   );
 }

@@ -127,39 +127,10 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
                   key={category}
                   type="button"
                   onClick={() => setActiveCategory(category)}
-                  className={`
-                    group
-                    inline-flex
-                    shrink-0
-                    items-center
-                    gap-2
-                    rounded-full
-                    border
-                    px-4
-                    py-2
-                    text-xs
-                    font-medium
-                    transition-all
-                    duration-200
-                    ${
-                      active
-                        ? "border-white/16 bg-white/[0.07] text-foreground"
-                        : "border-white/[0.07] bg-white/1.5 text-muted-foreground hover:bg-white/4 hover:text-foreground"
-                    }
-                  `}
+                  className={`group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-all duration-200 ${ active? "border-white/16 bg-white/[0.07] text-foreground": "border-white/[0.07] bg-white/1.5 text-muted-foreground hover:bg-white/4 hover:text-foreground"}`}
                 >
                   <span
-                    className={`
-                      h-1.5
-                      w-1.5
-                      rounded-full
-                      ${style.dot}
-                      ${
-                        active
-                          ? "opacity-100"
-                          : "opacity-40 group-hover:opacity-80"
-                      }
-                    `}
+                    className={`h-1.5 w-1.5 rounded-full ${style.dot} ${active? "opacity-100": "opacity-group-hover:opacity-80"}`}
                   />
 
                   {category}
@@ -193,30 +164,14 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
               <Link
                 key={post.slug}
                 href={`/writing/${post.slug}`}
-                className={`
-                  group
-                  block
-                  border-b
-                  border-white/8
-                  transition-colors
-                  duration-300
-                  last:border-b-0
-                  hover:bg-white/1.5
-                `}
+                className={`group block border-b border-white/8 transition-colors duration-300 last:border-b-0 hover:bg-white/1.5`}
               >
                 <article className="py-8 sm:py-10 lg:py-11">
                   <div className="grid gap-6 lg:grid-cols-[70px_150px_1fr_120px_40px] lg:items-start lg:gap-7">
                     {/* Number */}
                     <div className="hidden lg:block">
                       <span
-                        className="
-                          font-mono
-                          text-xs
-                          text-white/20
-                          transition-colors
-                          duration-300
-                          group-hover:text-brand-violet/70
-                        "
+                        className="font-mono text-xs text-white/20 transition-colors duration-300 group-hover:text-brand-violet/70"
                       >
                         {(index + 1).toString().padStart(2, "0")}
                       </span>
@@ -225,25 +180,10 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
                     {/* Category */}
                     <div className="flex items-center gap-2.5 lg:pt-1">
                       <span
-                        className={`
-                          h-1.5
-                          w-1.5
-                          rounded-full
-                          ${style.dot}
-                          opacity-70
-                          transition-opacity
-                          group-hover:opacity-100
-                        `}
+                        className={`h-1.5 w-1.5 rounded-full ${style.dot} opacity-70 transition-opacity group-hover:opacity-100`}
                       />
-
                       <span
-                        className={`
-                          text-[10px]
-                          font-medium
-                          uppercase
-                          tracking-[0.18em]
-                          ${style.text}
-                        `}
+                        className={`text-[10px] font-medium tracking-[0.18em] ${style.text}`}
                       >
                         {category}
                       </span>
@@ -252,31 +192,13 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
                     {/* Content */}
                     <div className="min-w-0">
                       <h2
-                        className="
-                          max-w-3xl
-                          text-xl
-                          font-medium
-                          leading-8
-                          tracking-tight
-                          text-foreground
-                          transition-colors
-                          duration-300
-                          group-hover:text-white
-                          sm:text-2xl
-                        "
+                        className="max-w-3xl text-xl font-medium leading-8 tracking-tight text-foreground transition-colors duration-300 group-hover:text-white sm:text-2xl"
                       >
                         {post.frontmatter.title}
                       </h2>
 
                       <p
-                        className="
-                          mt-3
-                          max-w-2xl
-                          text-sm
-                          leading-6
-                          text-muted-foreground
-                          sm:text-[15px]
-                        "
+                        className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-[15px]"
                       >
                         {post.frontmatter.description}
                       </p>
@@ -288,16 +210,7 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
                             {post.frontmatter.tags.slice(0, 3).map((tag: string) => (
                               <span
                                 key={tag}
-                                className="
-                                    rounded-md
-                                    border
-                                    border-white/8
-                                    bg-white/8
-                                    px-2
-                                    py-1
-                                    text-[10px]
-                                    text-muted-foreground/70
-                                  "
+                                className="rounded-md border border-white/8 bg-white/8 px-2 py-1 text-[10px] text-muted-foreground/70"
                               >
                                 {tag}
                               </span>
@@ -308,7 +221,7 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
 
                     {/* Date */}
                     <div className="flex items-center gap-2 lg:justify-end lg:pt-1">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/60">
+                      <span className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground/60">
                         {formatDate(post.frontmatter.date)}
                       </span>
 
@@ -326,31 +239,11 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
                     {/* Arrow */}
                     <div className="hidden justify-end lg:flex">
                       <span
-                        className="
-                          flex
-                          h-9
-                          w-9
-                          items-center
-                          justify-center
-                          rounded-full
-                          border
-                          border-white/8
-                          text-muted-foreground
-                          transition-all
-                          duration-300
-                          group-hover:border-brand-violet/30
-                          group-hover:bg-brand-violet/10
-                          group-hover:text-brand-violet
-                        "
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/8 text-muted-foreground transition-all duration-300 group-hover:border-brand-violet/30 group-hover:bg-brand-violet/10 group-hover:text-brand-violet"
                       >
                         <ArrowUpRight
                           size={16}
-                          className="
-                            transition-transform
-                            duration-300
-                            group-hover:-translate-y-0.5
-                            group-hover:translate-x-0.5
-                          "
+                          className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                         />
                       </span>
                     </div>
@@ -375,16 +268,7 @@ export default function WritingArchive({ posts }: WritingArchiveProps) {
                     </div>
 
                     <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        text-xs
-                        font-medium
-                        text-muted-foreground
-                        transition-colors
-                        group-hover:text-brand-violet
-                      "
+                      className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground transition-colors group-hover:text-brand-violet"
                     >
                       Read
                       <ArrowUpRight size={14} />

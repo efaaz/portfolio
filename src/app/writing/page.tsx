@@ -1,19 +1,23 @@
 import { getAllPosts } from "@/lib/post";
 import WritingArchive from "@/components/writing/WritingArchive";
 import { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ??
-      "http://localhost:3000",
-  ),
+  title: "Writing",
+  description:
+    "Writing about software, systems, psychology, business, economics, books, and the ideas that connect them.",
 
-  title: {
-    default: "Writing | Efaz",
-    template: "%s | Efaz",
+  alternates: {
+    canonical: absoluteUrl("/writing"),
   },
 
-  description:
-    "Writing about software, systems, psychology, business, economics, books, and the ideas I find worth exploring.",
+  openGraph: {
+    title: "Writing — Efaz",
+    description:
+      "Ideas, notes, observations, books, systems, psychology, and technology.",
+    url: absoluteUrl("/writing"),
+    type: "website",
+  },
 };
 export default function Page() {
   const posts = getAllPosts();

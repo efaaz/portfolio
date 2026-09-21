@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-
 import type { BookType } from "@/data/books";
 import { getBookCover } from "@/lib/books";
 

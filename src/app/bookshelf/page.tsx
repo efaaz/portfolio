@@ -2,20 +2,24 @@ import { getBooks } from "@/lib/books";
 import BookshelfArchive from "@/components/books/BookshelfArchive";
 import { BookType } from "@/data/books";
 import { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ??
-      "http://localhost:3000",
-  ),
+  title: "Bookshelf",
+  description:
+    "A personal bookshelf of nonfiction books covering psychology, business, economics, technology, systems, and human behavior.",
 
-  title: {
-    default: "Bookshelf | Efaz",
-    template: "%s | Efaz",
+  alternates: {
+    canonical: absoluteUrl("/bookshelf"),
   },
 
-  description:
-    "A collection of books I've read, am reading, or want to explore—mostly around psychology, economics, business, systems, technology, and human behavior",
+  openGraph: {
+    title: "Bookshelf — Efaz",
+    description:
+      "Books that shape how I think.",
+    url: absoluteUrl("/bookshelf"),
+    type: "website",
+  },
 };
 
 export default function BookshelfPage() {
@@ -149,7 +153,7 @@ export default function BookshelfPage() {
           <Stat value={`${books.length}+`} label="Books" />
 
           <Stat
-            value={`${new Set(books.map((book: BookType) => book.category)).size}+`}
+            value="15+"
             label="Categories"
           />
 

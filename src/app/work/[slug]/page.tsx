@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowUpRight, Check, ExternalLink } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import { getAllProjectSlugs, getProjectBySlug } from "@/lib/projects";
+import { absoluteUrl, siteConfig } from "@/lib/site";
+import { JsonLd } from "@/app/json-ld";
 
 type PageProps = {
   params: Promise<{
@@ -22,10 +24,6 @@ export async function generateStaticParams() {
   }));
 }
 
-/* =========================================================
-   METADATA
-========================================================= */
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -37,35 +35,83 @@ export async function generateMetadata({
     return {};
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const canonical = absoluteUrl(`/work/${project.slug}`);
 
-  const canonicalUrl = `${siteUrl}/work/${project.slug}`;
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
 
-  const imageUrl = project.image.startsWith("http")
-    ? project.image
-    : `${siteUrl}${project.image}`;
+    "@id": `${canonical}#project`,
+
+    name: project.title,
+
+    description: project.description,
+
+    url: canonical,
+
+    image: absoluteUrl(project.image),
+
+    author: {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      name: siteConfig.author.name,
+      url: absoluteUrl("/about"),
+    },
+
+    programmingLanguage: project.technologies,
+
+    ...(project.githubUrl
+      ? {
+          codeRepository: project.githubUrl,
+        }
+      : {}),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: absoluteUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Work",
+        item: absoluteUrl("/work"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: canonical,
+      },
+    ],
+  };
 
   return {
     title: project.title,
+
     description: project.description,
 
     alternates: {
-      canonical: canonicalUrl,
+      canonical,
     },
 
     openGraph: {
-      type: "article",
-      url: canonicalUrl,
       title: project.title,
       description: project.description,
-      siteName: "Efaz",
+      type: "article",
+      url: canonical,
 
       images: [
         {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${project.title} project preview`,
+          url: absoluteUrl(project.image),
+          alt: project.title,
         },
       ],
     },
@@ -74,16 +120,11 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: project.title,
       description: project.description,
-      images: [imageUrl],
+      images: [absoluteUrl(project.image)],
     },
   };
 }
-
-/* =========================================================
-   PAGE
-========================================================= */
-
-export default async function ProjectPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
   const project = getProjectBySlug(slug);
@@ -91,16 +132,75 @@ export default async function ProjectPage({ params }: PageProps) {
   if (!project) {
     notFound();
   }
+  const canonical = absoluteUrl(`/work/${project.slug}`);
 
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+
+    "@id": `${canonical}#project`,
+
+    name: project.title,
+
+    description: project.description,
+
+    url: canonical,
+
+    image: absoluteUrl(project.image),
+
+    author: {
+      "@type": "Person",
+      "@id": `${siteConfig.url}/#person`,
+      name: siteConfig.author.name,
+      url: absoluteUrl("/about"),
+    },
+
+    programmingLanguage: project.technologies,
+
+    ...(project.githubUrl
+      ? {
+          codeRepository: project.githubUrl,
+        }
+      : {}),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: absoluteUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Work",
+        item: absoluteUrl("/work"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: canonical,
+      },
+    ],
+  };
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* =====================================================
+    <>
+      <JsonLd data={projectSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <main className="relative min-h-screen overflow-hidden">
+        {/* =====================================================
           BACKGROUND
       ====================================================== */}
 
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="
             absolute
             left-[5%]
             top-[5%]
@@ -110,10 +210,10 @@ export default async function ProjectPage({ params }: PageProps) {
             bg-brand-violet/4
             blur-[140px]
           "
-        />
+          />
 
-        <div
-          className="
+          <div
+            className="
             absolute
             right-[5%]
             top-[35%]
@@ -123,10 +223,10 @@ export default async function ProjectPage({ params }: PageProps) {
             bg-brand-cyan/3
             blur-[130px]
           "
-        />
+          />
 
-        <div
-          className="
+          <div
+            className="
             absolute
             bottom-[5%]
             left-[35%]
@@ -136,21 +236,21 @@ export default async function ProjectPage({ params }: PageProps) {
             bg-brand-coral/2
             blur-[120px]
           "
-        />
-      </div>
+          />
+        </div>
 
-      {/* Grid */}
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-15" />
+        {/* Grid */}
+        <div className="pointer-events-none absolute inset-0 bg-grid opacity-15" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
-        {/* =====================================================
+        <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
+          {/* =====================================================
             BACK
         ====================================================== */}
 
-        <div className="pt-8 sm:pt-10">
-          <Link
-            href="/work"
-            className="
+          <div className="pt-8 sm:pt-10">
+            <Link
+              href="/work"
+              className="
               group
               inline-flex
               items-center
@@ -161,42 +261,42 @@ export default async function ProjectPage({ params }: PageProps) {
               duration-200
               hover:text-foreground
             "
-          >
-            <ArrowLeft
-              size={15}
-              className="
+            >
+              <ArrowLeft
+                size={15}
+                className="
                 transition-transform
                 duration-200
                 group-hover:-translate-x-1
               "
-            />
-            Back to work
-          </Link>
-        </div>
+              />
+              Back to work
+            </Link>
+          </div>
 
-        {/* =====================================================
+          {/* =====================================================
             PROJECT HEADER
         ====================================================== */}
 
-        <header className="max-w-5xl pb-12 pt-16 sm:pt-20 lg:pb-16 lg:pt-24">
-          {/* Meta */}
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
+          <header className="max-w-5xl pb-12 pt-16 sm:pt-20 lg:pb-16 lg:pt-24">
+            {/* Meta */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
 
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-brand-cyan">
-              {project.type}
-            </span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-brand-cyan">
+                {project.type}
+              </span>
 
-            <span className="h-1 w-1 rounded-full bg-white/20" />
+              <span className="h-1 w-1 rounded-full bg-white/20" />
 
-            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/60">
-              {project.year}
-            </span>
-          </div>
+              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/60">
+                {project.year}
+              </span>
+            </div>
 
-          {/* Title */}
-          <h1
-            className="
+            {/* Title */}
+            <h1
+              className="
               mt-7
               max-w-5xl
               text-5xl
@@ -207,13 +307,13 @@ export default async function ProjectPage({ params }: PageProps) {
               sm:text-6xl
               lg:text-7xl
             "
-          >
-            {project.title}
-          </h1>
+            >
+              {project.title}
+            </h1>
 
-          {/* Description */}
-          <p
-            className="
+            {/* Description */}
+            <p
+              className="
               mt-7
               max-w-3xl
               text-lg
@@ -221,18 +321,18 @@ export default async function ProjectPage({ params }: PageProps) {
               text-muted-foreground
               sm:text-xl
             "
-          >
-            {project.description}
-          </p>
+            >
+              {project.description}
+            </p>
 
-          {/* Links */}
-          <div className="mt-8 flex flex-wrap gap-3">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="
+            {/* Links */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="
                   group
                   inline-flex
                   items-center
@@ -251,25 +351,25 @@ export default async function ProjectPage({ params }: PageProps) {
                   hover:border-brand-violet/50
                   hover:bg-brand-violet/15
                 "
-              >
-                Live project
-                <ExternalLink
-                  size={14}
-                  className="
+                >
+                  Live project
+                  <ExternalLink
+                    size={14}
+                    className="
                     transition-transform
                     group-hover:-translate-y-0.5
                     group-hover:translate-x-0.5
                   "
-                />
-              </a>
-            )}
+                  />
+                </a>
+              )}
 
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="
                   group
                   inline-flex
                   items-center
@@ -288,28 +388,28 @@ export default async function ProjectPage({ params }: PageProps) {
                   hover:border-white/15
                   hover:text-foreground
                 "
-              >
-                Source code
-                <ArrowUpRight
-                  size={14}
-                  className="
+                >
+                  Source code
+                  <ArrowUpRight
+                    size={14}
+                    className="
                     transition-transform
                     group-hover:-translate-y-0.5
                     group-hover:translate-x-0.5
                   "
-                />
-              </a>
-            )}
-          </div>
-        </header>
+                  />
+                </a>
+              )}
+            </div>
+          </header>
 
-        {/* =====================================================
+          {/* =====================================================
             HERO IMAGE
         ====================================================== */}
 
-        <section className="pb-20">
-          <div
-            className="
+          <section className="pb-20">
+            <div
+              className="
               relative
               aspect-video
               overflow-hidden
@@ -319,18 +419,18 @@ export default async function ProjectPage({ params }: PageProps) {
               bg-surface
               shadow-[0_35px_100px_rgba(0,0,0,0.30)]
             "
-          >
-            <Image
-              src={project.image}
-              alt={`${project.title} preview`}
-              fill
-              priority
-              sizes="(max-width: 1280px) 100vw, 1280px"
-              className="object-cover"
-            />
+            >
+              <Image
+                src={project.image}
+                alt={`${project.title} preview`}
+                fill
+                priority
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover"
+              />
 
-            <div
-              className="
+              <div
+                className="
                 pointer-events-none
                 absolute
                 inset-0
@@ -339,81 +439,85 @@ export default async function ProjectPage({ params }: PageProps) {
                 via-transparent
                 to-transparent
               "
-            />
-          </div>
-        </section>
+              />
+            </div>
+          </section>
 
-        {/* =====================================================
+          {/* =====================================================
             OVERVIEW
         ====================================================== */}
 
-        {project.overview && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel number="01" label="Overview" title="What is it?" />
+          {project.overview && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="01"
+                  label="Overview"
+                  title="What is it?"
+                />
 
-              <p className="max-w-3xl text-lg leading-9 text-muted-foreground sm:text-xl">
-                {project.overview}
-              </p>
-            </div>
-          </section>
-        )}
+                <p className="max-w-3xl text-lg leading-9 text-muted-foreground sm:text-xl">
+                  {project.overview}
+                </p>
+              </div>
+            </section>
+          )}
 
-        {/* =====================================================
+          {/* =====================================================
             PROBLEM
         ====================================================== */}
 
-        {project.problem && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="02"
-                label="Problem"
-                title="What needed solving?"
-              />
+          {project.problem && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="02"
+                  label="Problem"
+                  title="What needed solving?"
+                />
 
-              <div className="max-w-3xl">
-                <p className="text-lg leading-9 text-muted-foreground sm:text-xl">
-                  {project.problem}
-                </p>
+                <div className="max-w-3xl">
+                  <p className="text-lg leading-9 text-muted-foreground sm:text-xl">
+                    {project.problem}
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
-        {/* =====================================================
+          {/* =====================================================
             APPROACH
         ====================================================== */}
 
-        {project.approach && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="03"
-                label="Approach"
-                title="How I approached it."
-              />
+          {project.approach && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="03"
+                  label="Approach"
+                  title="How I approached it."
+                />
 
-              <p className="max-w-3xl text-lg leading-9 text-muted-foreground sm:text-xl">
-                {project.approach}
-              </p>
-            </div>
-          </section>
-        )}
+                <p className="max-w-3xl text-lg leading-9 text-muted-foreground sm:text-xl">
+                  {project.approach}
+                </p>
+              </div>
+            </section>
+          )}
 
-        {/* =====================================================
+          {/* =====================================================
             TECHNOLOGY
         ====================================================== */}
 
-        <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-          <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-            <SectionLabel number="04" label="Technology" title="The stack." />
+          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+              <SectionLabel number="04" label="Technology" title="The stack." />
 
-            <div className="flex max-w-3xl flex-wrap gap-3">
-              {project.technologies.map((technology) => (
-                <span
-                  key={technology}
-                  className="
+              <div className="flex max-w-3xl flex-wrap gap-3">
+                {project.technologies.map((technology) => (
+                  <span
+                    key={technology}
+                    className="
                     rounded-xl
                     border
                     border-white/8
@@ -428,86 +532,86 @@ export default async function ProjectPage({ params }: PageProps) {
                     hover:bg-brand-violet/5
                     hover:text-foreground
                   "
-                >
-                  {technology}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* =====================================================
-            ARCHITECTURE
-        ====================================================== */}
-
-        {project.architecture && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="05"
-                label="Architecture"
-                title="How it fits together."
-              />
-
-              <div className="max-w-3xl">
-                {/* Architecture diagram */}
-                <div className="overflow-hidden rounded-2xl border border-white/8 bg-[#080E19] p-6 sm:p-8">
-                  <div className="font-mono text-xs text-muted-foreground">
-                    <div className="rounded-xl border border-brand-violet/20 bg-brand-violet/5 p-4 text-brand-violet">
-                      Next.js
-                      <span className="ml-2 text-white/30">→ frontend</span>
-                    </div>
-
-                    <div className="flex justify-center py-3 text-white/20">
-                      ↓
-                    </div>
-
-                    <div className="rounded-xl border border-brand-cyan/20 bg-brand-cyan/4 p-4 text-brand-cyan">
-                      FastAPI
-                      <span className="ml-2 text-white/30">
-                        → API / business logic
-                      </span>
-                    </div>
-
-                    <div className="flex justify-center py-3 text-white/20">
-                      ↓
-                    </div>
-
-                    <div className="rounded-xl border border-brand-lime/20 bg-brand-lime/4 p-4 text-brand-lime">
-                      PostgreSQL
-                      <span className="ml-2 text-white/30">
-                        → relational data
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="mt-6 text-base leading-8 text-muted-foreground sm:text-lg">
-                  {project.architecture}
-                </p>
+                  >
+                    {technology}
+                  </span>
+                ))}
               </div>
             </div>
           </section>
-        )}
 
-        {/* =====================================================
+          {/* =====================================================
+            ARCHITECTURE
+        ====================================================== */}
+
+          {project.architecture && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="05"
+                  label="Architecture"
+                  title="How it fits together."
+                />
+
+                <div className="max-w-3xl">
+                  {/* Architecture diagram */}
+                  <div className="overflow-hidden rounded-2xl border border-white/8 bg-[#080E19] p-6 sm:p-8">
+                    <div className="font-mono text-xs text-muted-foreground">
+                      <div className="rounded-xl border border-brand-violet/20 bg-brand-violet/5 p-4 text-brand-violet">
+                        Next.js
+                        <span className="ml-2 text-white/30">→ frontend</span>
+                      </div>
+
+                      <div className="flex justify-center py-3 text-white/20">
+                        ↓
+                      </div>
+
+                      <div className="rounded-xl border border-brand-cyan/20 bg-brand-cyan/4 p-4 text-brand-cyan">
+                        FastAPI
+                        <span className="ml-2 text-white/30">
+                          → API / business logic
+                        </span>
+                      </div>
+
+                      <div className="flex justify-center py-3 text-white/20">
+                        ↓
+                      </div>
+
+                      <div className="rounded-xl border border-brand-lime/20 bg-brand-lime/4 p-4 text-brand-lime">
+                        PostgreSQL
+                        <span className="ml-2 text-white/30">
+                          → relational data
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="mt-6 text-base leading-8 text-muted-foreground sm:text-lg">
+                    {project.architecture}
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* =====================================================
             FEATURES
         ====================================================== */}
 
-        {project.features && project.features.length > 0 && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="06"
-                label="Features"
-                title="What it does."
-              />
+          {project.features && project.features.length > 0 && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="06"
+                  label="Features"
+                  title="What it does."
+                />
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                {project.features.map((feature) => (
-                  <article
-                    key={feature.title}
-                    className="
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {project.features.map((feature) => (
+                    <article
+                      key={feature.title}
+                      className="
                         rounded-2xl
                         border
                         border-white/[0.07]
@@ -519,9 +623,9 @@ export default async function ProjectPage({ params }: PageProps) {
                         hover:border-white/13
                         hover:bg-white/[0.035]
                       "
-                  >
-                    <div
-                      className="
+                    >
+                      <div
+                        className="
                           flex
                           h-9
                           w-9
@@ -531,63 +635,17 @@ export default async function ProjectPage({ params }: PageProps) {
                           bg-brand-violet/10
                           text-brand-violet
                         "
-                    >
-                      <Check size={17} />
-                    </div>
-
-                    <h3 className="mt-5 text-base font-medium text-foreground">
-                      {feature.title}
-                    </h3>
-
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* =====================================================
-            TECHNICAL DECISIONS
-        ====================================================== */}
-
-        {project.technicalDecisions &&
-          project.technicalDecisions.length > 0 && (
-            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-                <SectionLabel
-                  number="07"
-                  label="Decisions"
-                  title="Why I built it this way."
-                />
-
-                <div className="border-t border-white/8">
-                  {project.technicalDecisions.map((decision, index) => (
-                    <article
-                      key={decision.title}
-                      className="
-                          border-b
-                          border-white/8
-                          py-7
-                        "
-                    >
-                      <div className="flex gap-5">
-                        <span className="font-mono text-[10px] text-brand-violet">
-                          {(index + 1).toString().padStart(2, "0")}
-                        </span>
-
-                        <div>
-                          <h3 className="text-base font-medium text-foreground sm:text-lg">
-                            {decision.title}
-                          </h3>
-
-                          <p className="mt-2 text-sm leading-7 text-muted-foreground sm:text-[15px]">
-                            {decision.description}
-                          </p>
-                        </div>
+                      >
+                        <Check size={17} />
                       </div>
+
+                      <h3 className="mt-5 text-base font-medium text-foreground">
+                        {feature.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        {feature.description}
+                      </p>
                     </article>
                   ))}
                 </div>
@@ -595,24 +653,70 @@ export default async function ProjectPage({ params }: PageProps) {
             </section>
           )}
 
-        {/* =====================================================
+          {/* =====================================================
+            TECHNICAL DECISIONS
+        ====================================================== */}
+
+          {project.technicalDecisions &&
+            project.technicalDecisions.length > 0 && (
+              <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+                <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                  <SectionLabel
+                    number="07"
+                    label="Decisions"
+                    title="Why I built it this way."
+                  />
+
+                  <div className="border-t border-white/8">
+                    {project.technicalDecisions.map((decision, index) => (
+                      <article
+                        key={decision.title}
+                        className="
+                          border-b
+                          border-white/8
+                          py-7
+                        "
+                      >
+                        <div className="flex gap-5">
+                          <span className="font-mono text-[10px] text-brand-violet">
+                            {(index + 1).toString().padStart(2, "0")}
+                          </span>
+
+                          <div>
+                            <h3 className="text-base font-medium text-foreground sm:text-lg">
+                              {decision.title}
+                            </h3>
+
+                            <p className="mt-2 text-sm leading-7 text-muted-foreground sm:text-[15px]">
+                              {decision.description}
+                            </p>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+
+          {/* =====================================================
             SCREENSHOTS
         ====================================================== */}
 
-        {project.screenshots && project.screenshots.length > 0 && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="08"
-                label="Screenshots"
-                title="Inside the product."
-              />
+          {project.screenshots && project.screenshots.length > 0 && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="08"
+                  label="Screenshots"
+                  title="Inside the product."
+                />
 
-              <div className="space-y-6">
-                {project.screenshots.map((screenshot) => (
-                  <div
-                    key={screenshot.src}
-                    className="
+                <div className="space-y-6">
+                  {project.screenshots.map((screenshot) => (
+                    <div
+                      key={screenshot.src}
+                      className="
                         relative
                         aspect-16/10
                         overflow-hidden
@@ -621,61 +725,61 @@ export default async function ProjectPage({ params }: PageProps) {
                         border-white/8
                         bg-surface
                       "
-                  >
-                    <Image
-                      src={screenshot.src}
-                      alt={screenshot.alt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 800px"
-                      className="
+                    >
+                      <Image
+                        src={screenshot.src}
+                        alt={screenshot.alt}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 800px"
+                        className="
                           object-cover
                           transition-transform
                           duration-700
                           hover:scale-[1.015]
                         "
-                    />
-                  </div>
-                ))}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
-        {/* =====================================================
+          {/* =====================================================
             CHALLENGES
         ====================================================== */}
 
-        {project.challenges && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="09"
-                label="Challenges"
-                title="What was difficult?"
-              />
+          {project.challenges && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="09"
+                  label="Challenges"
+                  title="What was difficult?"
+                />
 
-              <p className="max-w-3xl text-lg leading-9 text-muted-foreground sm:text-xl">
-                {project.challenges}
-              </p>
-            </div>
-          </section>
-        )}
+                <p className="max-w-3xl text-lg leading-9 text-muted-foreground sm:text-xl">
+                  {project.challenges}
+                </p>
+              </div>
+            </section>
+          )}
 
-        {/* =====================================================
+          {/* =====================================================
             LESSONS
         ====================================================== */}
 
-        {project.lessons && (
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
-            <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
-              <SectionLabel
-                number="10"
-                label="Lessons"
-                title="What I learned."
-              />
+          {project.lessons && (
+            <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
+                <SectionLabel
+                  number="10"
+                  label="Lessons"
+                  title="What I learned."
+                />
 
-              <div
-                className="
+                <div
+                  className="
                   relative
                   overflow-hidden
                   rounded-2xl
@@ -685,9 +789,9 @@ export default async function ProjectPage({ params }: PageProps) {
                   p-7
                   sm:p-9
                 "
-              >
-                <div
-                  className="
+                >
+                  <div
+                    className="
                     pointer-events-none
                     absolute
                     -right-16
@@ -698,25 +802,25 @@ export default async function ProjectPage({ params }: PageProps) {
                     bg-brand-violet/8
                     blur-[80px]
                   "
-                />
+                  />
 
-                <p className="relative text-lg leading-9 text-foreground/90 sm:text-xl">
-                  {project.lessons}
-                </p>
+                  <p className="relative text-lg leading-9 text-foreground/90 sm:text-xl">
+                    {project.lessons}
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
-        {/* =====================================================
+          {/* =====================================================
             NEXT STEP
         ====================================================== */}
 
-        <section className="border-t border-white/8 py-20 sm:py-24">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <Link
-              href="/work"
-              className="
+          <section className="border-t border-white/8 py-20 sm:py-24">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <Link
+                href="/work"
+                className="
                 group
                 inline-flex
                 items-center
@@ -726,17 +830,17 @@ export default async function ProjectPage({ params }: PageProps) {
                 transition-colors
                 hover:text-foreground
               "
-            >
-              <ArrowLeft
-                size={15}
-                className="transition-transform group-hover:-translate-x-1"
-              />
-              More projects
-            </Link>
+              >
+                <ArrowLeft
+                  size={15}
+                  className="transition-transform group-hover:-translate-x-1"
+                />
+                More projects
+              </Link>
 
-            <Link
-              href="/writing"
-              className="
+              <Link
+                href="/writing"
+                className="
                 group
                 inline-flex
                 items-center
@@ -746,17 +850,18 @@ export default async function ProjectPage({ params }: PageProps) {
                 transition-colors
                 hover:text-foreground
               "
-            >
-              Read my thinking
-              <ArrowUpRight
-                size={15}
-                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </Link>
-          </div>
-        </section>
-      </div>
-    </main>
+              >
+                Read my thinking
+                <ArrowUpRight
+                  size={15}
+                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </div>
+          </section>
+        </div>
+      </main>
+    </>
   );
 }
 
