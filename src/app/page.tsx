@@ -7,6 +7,7 @@ import StartConversation from "@/components/home/StartConversation";
 import FeaturedProjects from "@/components/projects/FeaturedProjects";
 import { absoluteUrl } from "@/lib/site";
 import { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "Efaz — Software Engineer",
@@ -53,6 +54,7 @@ export default function Home() {
       <RecentWriting />
       <Bookshelf />
       <StartConversation />
+      <Analytics />
     </main>
   );
 }
