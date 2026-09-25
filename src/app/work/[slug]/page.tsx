@@ -315,7 +315,7 @@ export default async function Page({ params }: PageProps) {
             <p
               className="
               mt-7
-              max-w-3xl
+              max-w-6xl
               text-lg
               leading-8
               text-muted-foreground
@@ -400,6 +400,79 @@ export default async function Page({ params }: PageProps) {
                   />
                 </a>
               )}
+              {project.githubFrontendUrl && (
+                <a
+                  href={project.githubFrontendUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="
+                  group
+                  inline-flex
+                  items-center
+                  gap-2
+                  rounded-full
+                  border
+                  border-white/8
+                  bg-white/2
+                  px-5
+                  py-3
+                  text-sm
+                  font-medium
+                  text-muted-foreground
+                  transition-all
+                  duration-300
+                  hover:border-white/15
+                  hover:text-foreground
+                "
+                >
+                  Frontend Source code
+                  <ArrowUpRight
+                    size={14}
+                    className="
+                    transition-transform
+                    group-hover:-translate-y-0.5
+                    group-hover:translate-x-0.5
+                  "
+                  />
+                </a>
+              )}
+              {project.githubBackendUrl && (
+                <a
+                  href={project.githubBackendUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="
+                  group
+                  inline-flex
+                  items-center
+                  gap-2
+                  rounded-full
+                  border
+                  border-white/8
+                  bg-white/2
+                  px-5
+                  py-3
+                  text-sm
+                  font-medium
+                  text-muted-foreground
+                  transition-all
+                  duration-300
+                  hover:border-white/15
+                  hover:text-foreground
+                "
+                >
+                  Backend Source code
+                  <ArrowUpRight
+                    size={14}
+                    className="
+                    transition-transform
+                    group-hover:-translate-y-0.5
+                    group-hover:translate-x-0.5
+                  "
+                  />
+                </a>
+              )}
+
             </div>
           </header>
 
@@ -473,7 +546,7 @@ export default async function Page({ params }: PageProps) {
                 <SectionLabel
                   number="02"
                   label="Problem"
-                  title="What needed solving?"
+                  title="What problem is being solved?"
                 />
 
                 <div className="max-w-3xl">
@@ -513,9 +586,9 @@ export default async function Page({ params }: PageProps) {
             <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-20">
               <SectionLabel number="04" label="Technology" title="The stack." />
 
-              <div className="flex max-w-3xl flex-wrap gap-3">
+              <div className="flex max-w-3xl items-center flex-wrap gap-3">
                 {project.technologies.map((technology) => (
-                  <span
+                  <p
                     key={technology}
                     className="
                     rounded-xl
@@ -532,9 +605,8 @@ export default async function Page({ params }: PageProps) {
                     hover:bg-brand-violet/5
                     hover:text-foreground
                   "
-                  >
-                    {technology}
-                  </span>
+                  >{technology}
+                  </p>
                 ))}
               </div>
             </div>
@@ -558,29 +630,39 @@ export default async function Page({ params }: PageProps) {
                   <div className="overflow-hidden rounded-2xl border border-white/8 bg-[#080E19] p-6 sm:p-8">
                     <div className="font-mono text-xs text-muted-foreground">
                       <div className="rounded-xl border border-brand-violet/20 bg-brand-violet/5 p-4 text-brand-violet">
-                        Next.js
-                        <span className="ml-2 text-white/30">→ frontend</span>
+                        {project.frontend?.title}
+                        <span className="ml-2 text-white/70">→ {project.frontend?.description}</span>
                       </div>
 
-                      <div className="flex justify-center py-3 text-white/20">
+                      <div className="flex justify-center py-3 text-white">
                         ↓
                       </div>
 
                       <div className="rounded-xl border border-brand-cyan/20 bg-brand-cyan/4 p-4 text-brand-cyan">
-                        FastAPI
-                        <span className="ml-2 text-white/30">
-                          → API / business logic
+                        {project.backend?.title}
+                        <span className="ml-2 text-white/70">
+                          → {project.backend?.description}
                         </span>
                       </div>
 
-                      <div className="flex justify-center py-3 text-white/20">
+                      <div className="flex justify-center py-3 text-white">
                         ↓
                       </div>
 
                       <div className="rounded-xl border border-brand-lime/20 bg-brand-lime/4 p-4 text-brand-lime">
-                        PostgreSQL
-                        <span className="ml-2 text-white/30">
-                          → relational data
+                        {project.orm?.title}
+                        <span className="ml-2 text-white/70">
+                          → {project.orm?.description}
+                        </span>
+                      </div>
+                      <div className="flex justify-center py-3 text-white">
+                        ↓
+                      </div>
+
+                      <div className="rounded-xl border-brand-coral/20 bg-brand-coral/4 p-4 text-brand-coral border">
+                        {project.db?.title}
+                        <span className="ml-2 text-white/70">
+                          → {project.db?.description}
                         </span>
                       </div>
                     </div>
@@ -727,7 +809,7 @@ export default async function Page({ params }: PageProps) {
                       "
                     >
                       <Image
-                        src={screenshot.src}
+                        src={project.image}
                         alt={screenshot.alt}
                         fill
                         sizes="(max-width: 1024px) 100vw, 800px"
@@ -804,7 +886,7 @@ export default async function Page({ params }: PageProps) {
                   "
                   />
 
-                  <p className="relative text-lg leading-9 text-foreground/90 sm:text-xl">
+                  <p className="relative font-semibold text-lg leading-9 text-foreground/90 sm:text-xl">
                     {project.lessons}
                   </p>
                 </div>

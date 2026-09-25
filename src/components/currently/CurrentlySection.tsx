@@ -53,7 +53,7 @@ const stats = [
     label: "Years Learning",
   },
   {
-    value: "17+",
+    value: "10+",
     label: "Projects Built",
   },
   {

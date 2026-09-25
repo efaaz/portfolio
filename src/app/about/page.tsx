@@ -134,10 +134,6 @@ export default function AboutPage() {
       {" "}
       <JsonLd data={profileSchema} />
       <main className="relative min-h-screen overflow-hidden">
-        {/* =====================================================
-          BACKGROUND
-      ====================================================== */}
-
         <div className="pointer-events-none absolute inset-0">
           <div
             className="
@@ -222,16 +218,16 @@ export default function AboutPage() {
                 <div className="flex items-center gap-3">
                   <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
 
-                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">
+                  <span className="text-xs md:text-lg font-medium uppercase tracking-[0.2em] text-white/70">
                     About me
                   </span>
                 </div>
 
                 <h1
                   className="
-                  mt-5
+                  mt-2
                   max-w-3xl
-                  text-4xl
+                  text-xl
                   font-semibold
                   leading-[1.05]
                   tracking-tighter
@@ -254,7 +250,7 @@ export default function AboutPage() {
             QUOTE
         ================================================== */}
 
-          <section className="mx-auto max-w-5xl py-20 sm:py-24 lg:py-28">
+          <section className="mx-auto max-w-5xl py-10 sm:py-24 lg:py-28">
             <div className="flex gap-5 sm:gap-8">
               <div
                 className="
@@ -286,7 +282,7 @@ export default function AboutPage() {
                   lg:text-5xl
                 "
                 >
-                  Anyone that suggests to me to do less is either not a real
+                  Anyone that suggests me to do less is either not a real
                   friend or very confused.
                 </blockquote>
 
@@ -305,7 +301,7 @@ export default function AboutPage() {
             ABOUT ME
         ================================================== */}
 
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+          <section className="border-t border-white/8 py-10 sm:py-24 lg:py-28">
             <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
               <div>
                 <div className="flex items-center gap-3">
@@ -375,7 +371,7 @@ export default function AboutPage() {
             JOURNEY
         ================================================== */}
 
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+          <section className="border-t border-white/8 py-10 sm:py-24 lg:py-28">
             <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
               <div>
                 <div className="flex items-center gap-3">
@@ -468,7 +464,7 @@ export default function AboutPage() {
             BEYOND CODE
         ================================================== */}
 
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+          <section className="border-t border-white/8 py-10 sm:py-24 lg:py-28">
             <div className="max-w-3xl">
               <div className="flex items-center gap-3">
                 <span className="font-mono text-[10px] tracking-[0.18em] text-brand-violet">
@@ -502,62 +498,13 @@ export default function AboutPage() {
                 organizations, and the problems technology is supposed to solve.
               </p>
             </div>
-
-            {/* Interest cards */}
-            <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {interests.map((interest) => {
-                const Icon = interest.icon;
-
-                return (
-                  <div
-                    key={interest.title}
-                    className="
-                    group
-                    rounded-2xl
-                    border
-                    border-white/[0.07]
-                    bg-white/2
-                    p-5
-                    transition-all
-                    duration-300
-                    hover:-translate-y-1
-                    hover:border-white/13
-                    hover:bg-white/[0.035]
-                  "
-                  >
-                    <div
-                      className={`
-                      flex
-                      h-9
-                      w-9
-                      items-center
-                      justify-center
-                      rounded-xl
-                      ${interest.bg}
-                      ${interest.color}
-                    `}
-                    >
-                      <Icon size={17} strokeWidth={1.7} />
-                    </div>
-
-                    <h3 className="mt-5 text-base font-medium text-foreground">
-                      {interest.title}
-                    </h3>
-
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      {interest.description}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
           </section>
 
           {/* ==================================================
             BELIEF
         ================================================== */}
 
-          <section className="border-t border-white/8 py-20 sm:py-24 lg:py-28">
+          <section className="border-t border-white/8 py-10 sm:py-24 lg:py-28">
             <div
               className="
               relative
@@ -634,7 +581,7 @@ export default function AboutPage() {
                   <div className="h-px w-12 bg-linear-to-r from-brand-violet to-brand-cyan" />
 
                   <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                    Learn broadly · build thoughtfully
+                    Keep learning
                   </span>
                 </div>
               </div>
@@ -645,7 +592,7 @@ export default function AboutPage() {
             CTA
         ================================================== */}
 
-          <section className="border-t border-white/8 py-24 sm:py-28 lg:py-36">
+          <section className="border-t border-white/8 py-14 sm:py-28 lg:py-36">
             <div className="max-w-4xl">
               <div className="flex items-center gap-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_12px_rgba(34,211,238,0.8)]" />

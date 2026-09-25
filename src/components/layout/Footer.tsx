@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { SiGithub as Github } from "react-icons/si";
 import { FaLinkedin as Linkedin } from "react-icons/fa";
 
