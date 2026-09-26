@@ -1,9 +1,15 @@
+import { StaticImageData } from "next/image";
+import finxDashboard from "@/assets/images/projects/finx/dashboard.png";
+import finxTransection from "@/assets/images/projects/finx/transaction.png";
+import finxCategories from "@/assets/images/projects/finx/categories.png";
+import finxLanding from "@/assets/images/projects/finx/landing.png";
+
 export type Project = {
   slug: string;
   title: string;
   description: string;
 
-  image: string;
+  image: StaticImageData | string;
   year: number;
   type: string;
 
@@ -55,7 +61,7 @@ export type Project = {
   lessons?: string;
 
   screenshots?: {
-    src: string;
+    src: StaticImageData;
     alt: string;
   }[];
 };
@@ -65,8 +71,7 @@ export const projects: Project[] = [
     title: "FinX Personal Finanace Tracker",
     description:
       "A personal finance software for note keeping your financial data, organizing spending, and understanding financial habits. Instead of treating finance management as just recording numbers, I wanted to build something that makes the data easier to understand and useful for making everyday financial decisions.",
-    image:
-      "https://images.pexels.com/photos/38984789/pexels-photo-38984789.jpeg",
+    image: finxLanding,
 
     year: 2025,
     type: "Web Application / Personal Finance",
@@ -83,7 +88,7 @@ export const projects: Project[] = [
 
     featured: true,
 
-    liveUrl: "",
+    liveUrl: "https://finx-fawn.vercel.app",
     githubUrl: "",
     githubFrontendUrl: "https://github.com/efaaz/finx-v2",
     githubBackendUrl: "https://github.com/efaaz/finance-management-server",
@@ -180,16 +185,16 @@ export const projects: Project[] = [
 
     screenshots: [
       {
-        src: "assets/images/projects/finx/dashboard.png",
-        alt: "AI ERP dashboard",
+        src: finxDashboard,
+        alt: "FinX dashboard",
       },
       {
-        src: "assets/images/projects/finx/transection.png",
-        alt: "AI ERP inventory interface",
+        src: finxTransection,
+        alt: "FinX transactions",
       },
       {
-        src: "assets/images/projects/finx/reports.png",
-        alt: "AI ERP reports interface",
+        src: finxCategories,
+        alt: "FinX categories",
       },
     ],
   },
@@ -286,20 +291,7 @@ export const projects: Project[] = [
     lessons:
       "This project changed how I think about software architecture. Once the domain becomes complex, the quality of the model behind the interface matters more than how quickly individual features can be implemented.",
 
-    screenshots: [
-      {
-        src: "/images/projects/ai-erp/dashboard.png",
-        alt: "AI ERP dashboard",
-      },
-      {
-        src: "/images/projects/ai-erp/inventory.png",
-        alt: "AI ERP inventory interface",
-      },
-      {
-        src: "/images/projects/ai-erp/reports.png",
-        alt: "AI ERP reports interface",
-      },
-    ],
+  
   },
   {
     slug: "servicesphere",
@@ -307,10 +299,10 @@ export const projects: Project[] = [
     description:
       "A service-sharing platform where instructors can publish services, manage bookings, and track completed work.",
     image:
-      "https://images.pexels.com/photos/38984789/pexels-photo-38984789.jpeg",
+      "https://images.pexels.com/photos/34803998/pexels-photo-34803998.jpeg",
     year: 2025,
     type: "Full-Stack Platform",
     technologies: ["React", "Node.js", "MongoDB", "Firebase"],
-    featured: true,
+    featured: false,
   },
 ];

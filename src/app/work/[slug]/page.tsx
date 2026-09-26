@@ -48,8 +48,7 @@ export async function generateMetadata({
     description: project.description,
 
     url: canonical,
-
-    image: absoluteUrl(project.image),
+    // image: absoluteUrl(project.image),
 
     author: {
       "@type": "Person",
@@ -108,19 +107,19 @@ export async function generateMetadata({
       type: "article",
       url: canonical,
 
-      images: [
-        {
-          url: absoluteUrl(project.image),
-          alt: project.title,
-        },
-      ],
+      // images: [
+      //   {
+      //     url: absoluteUrl(project.image),
+      //     alt: project.title,
+      //   },
+      // ],
     },
 
     twitter: {
       card: "summary_large_image",
       title: project.title,
       description: project.description,
-      images: [absoluteUrl(project.image)],
+      // images: [absoluteUrl(project.image)],
     },
   };
 }
@@ -146,7 +145,7 @@ export default async function Page({ params }: PageProps) {
 
     url: canonical,
 
-    image: absoluteUrl(project.image),
+    // image: absoluteUrl(project.image),
 
     author: {
       "@type": "Person",
@@ -352,7 +351,7 @@ export default async function Page({ params }: PageProps) {
                   hover:bg-brand-violet/15
                 "
                 >
-                  Live project
+                  Live Project
                   <ExternalLink
                     size={14}
                     className="
@@ -385,11 +384,11 @@ export default async function Page({ params }: PageProps) {
                   text-muted-foreground
                   transition-all
                   duration-300
-                  hover:border-white/15
+                  ho`ver:border-white/15
                   hover:text-foreground
                 "
                 >
-                  Source code
+                  Source Code
                   <ArrowUpRight
                     size={14}
                     className="
@@ -425,7 +424,7 @@ export default async function Page({ params }: PageProps) {
                   hover:text-foreground
                 "
                 >
-                  Frontend Source code
+                  Frontend Source Code
                   <ArrowUpRight
                     size={14}
                     className="
@@ -461,7 +460,7 @@ export default async function Page({ params }: PageProps) {
                   hover:text-foreground
                 "
                 >
-                  Backend Source code
+                  Backend Source Code
                   <ArrowUpRight
                     size={14}
                     className="
@@ -796,11 +795,12 @@ export default async function Page({ params }: PageProps) {
 
                 <div className="space-y-6">
                   {project.screenshots.map((screenshot) => (
+                    screenshot.src && (
                     <div
-                      key={screenshot.src}
+                      key={screenshot.alt}
                       className="
                         relative
-                        aspect-16/10
+                        aspect-19/10
                         overflow-hidden
                         rounded-2xl
                         border
@@ -809,19 +809,19 @@ export default async function Page({ params }: PageProps) {
                       "
                     >
                       <Image
-                        src={project.image}
+                        src={screenshot.src}
                         alt={screenshot.alt}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 800px"
+                        sizes=""
                         className="
-                          object-cover
+                          object-contain
                           transition-transform
                           duration-700
                           hover:scale-[1.015]
                         "
                       />
                     </div>
-                  ))}
+                  )))}
                 </div>
               </div>
             </section>

@@ -48,7 +48,8 @@ export default function MobileNav() {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/8 bg-white/4 text-foreground transition-all duration-200 hover:border-white/15 hover:bg-white/[0.07]">
+        className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/8 bg-white/4 text-foreground transition-all duration-200 hover:border-white/15 hover:bg-white/[0.07]"
+      >
         {open ? <X size={19} /> : <Menu size={19} />}
       </button>
 
@@ -196,9 +197,7 @@ export default function MobileNav() {
                   </span>
 
                   <div>
-                    <p className="text-xs text-muted-foreground">
-                      Currently
-                    </p>
+                    <p className="text-xs text-muted-foreground">Currently</p>
 
                     <p className="text-sm font-medium text-foreground">
                       Building AI ERP
@@ -208,7 +207,7 @@ export default function MobileNav() {
 
                 {/* Resume */}
                 <Link
-                  href="/resume/Efaz-Rahman-CV.pdf"
+                  href="https://drive.google.com/file/d/1Dhdl2h1kZbR6CeKRZcTD6GlbyHpoY-Al/view?usp=sharing"
                   target="_blank"
                   onClick={closeMenu}
                   className="
@@ -234,7 +233,6 @@ export default function MobileNav() {
                   "
                 >
                   Resume
-
                   <ArrowUpRight
                     size={15}
                     className="

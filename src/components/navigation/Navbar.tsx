@@ -68,7 +68,7 @@ export default function Navbar() {
 
           {/* Resume */}
           <Link
-            href="https://drive.google.com/file/d/119EKO-zL3Tp2H4kYol3v1hsrRjLqxxIX/view?usp=sharing"
+            href="https://drive.google.com/file/d/1Dhdl2h1kZbR6CeKRZcTD6GlbyHpoY-Al/view?usp=sharing"
             target="_blank"
             className="
               group
