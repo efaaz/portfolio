@@ -1,0 +1,142 @@
+---
+title: "How antifragile book change my thoughts about designing and maintaining software"
+description: "Robust/Resilient software survive failure. Antifragile systems use failure as information and become better because of it."
+date: "2026-09-20"
+category: "Books"
+draft: false
+tags:
+  - Systems
+  - Decision Making
+  - Software Engineering
+readingTime: "7 min"
+---
+
+### What would software architecture look like if we stopped designing systems merely to survive failure and started designing them to learn from failure?
+
+Before reading [Antifragile](/bookshelf/antifragile), I thought building reliable software meant protecting the system from every failure, but a system that merely survives failure isn't necessarily getting better because of it.
+
+After reading the book that made me wonder: what would it look like to build software that doesn't just survive failure, but actually learns from it?
+
+This is is the core idea of this book's author Nassim Nicolas Taleb
+
+System can be fall into this three categories:
+
+> - **1. Fragile**
+> - **2. Robust/resilient**
+> - **3. Antifragile**
+
+### What is Fragile system looks like?
+
+System that breaks under stress or shocks like (like glass cup dropped on the floor).
+
+### What is robust/resilient system looks like?
+
+When a system can resist shocks and stress than stays the same.
+
+### The Antifragile Concept
+
+Antifragile is beyond resilience and robustness. The resilient system resist shocks and stays the same where antifragile system gets stronger, more adaptive, or more capable because of stress. This property is behind everything that has changed with time.
+
+For example:
+
+> - **Fragile software** → one dependency failure takes down the application
+> - **Resilient software** → dependency failure is contained
+> - **Antifragile software** → the failure produces data, tests, architectural changes, automation, and improved behavior
+
+## Core principles of building `Antifragile Software`
+
+### 1. Architecture should be able to change
+
+First when designing the software always think ahead, you are not designing the software for just today but also for tomorrow
+
+> Is my architecture optimized for today's requirements or designed to survive tomorrow's uncertainty?
+
+Today: `1000 users` six month’s later `10,000 users`
+
+Today: `One Payment Provider` Tomorrow: `There Payment Provider`
+
+You don’t have to build three payment providers or 10,000 users capable software from the start but design the software in such way that when the demand occur you easily adapt that time. You don’t have to redesign or rewrite the entire code feature or service.
+
+> Antifragile architecture leaves room for adaption
+
+### 2. Simplicity beats cleverness
+
+A software should be simple and easy to understand. Sometimes we create unnecessary abstractions, complicated state management for a simple software. Some software don’t need fancy tech to work, we are just adding more complexity without thinking maintainablity.
+
+> Complexity creates more surfaces where things can break.
+
+When the use case is small, its better not to over engineer it. Just because you write more code does not mean you are good developer. `code is a liability`
+
+> A complicated architecture can look sophisticated while actually being more fragile.
+
+
+### 2. Modular architecture
+
+`Why are tightly coupled systems so fragile?`
+
+Always break complex programs into smaller, independent and interchangeable parts so when failure occur, it can prevents the entire software to break. Make clear boundaries, high cohesion, dependency isolation, interchangeable components.
+
+> modularity gives a system more opportunities to absorb stress without taking the entire system down.
+
+### 3. Failure is not always the enemy & build systems that fail in small ways
+
+As a software engineer we always want to prevent failure but some failures are inevitable, so the important question becomes what the system does with them?
+
+some failure are uncertain and inevitable, you will never know when this failure will occur:
+
+- production incidents
+- unexpected inputs
+- traffic spikes
+- dependency failures
+- database problems
+- malformed requests
+- race conditions
+- security incidents
+- user behavior developers didn't anticipate
+
+The interesting part is not the failure itself but it is `does the system learn from it?`
+
+> **Instead of designing for:** `Nothing should ever fail`
+
+> **Design for:** `When something fails, the blast radius should be small`
+
+for example:
+- service isolation
+- bounded failures
+- timeouts
+- retries
+- circuit breakers
+- queues
+- graceful degradation
+- transaction boundaries
+- feature flags
+
+### Avoid single points of failure
+
+> A system becomes more antifragile when failure is distributed into small, manageable experiments rather than one catastrophic event.
+
+### 4. Humans are part of the system
+
+Software isn't just: `Code + Server + Database`
+
+It is:
+
+- Developers
+- Users
+- Operations
+- Business
+- Infrastructure
+- Dependencies
+- Processes
+
+> A system can be technically robust while the `organization around is fragile.`
+
+Examples:
+
+- only one developer understands the codebase
+- undocumented deployment process
+- manual production fixes
+- no incident procedure
+- knowledge trapped in one person's head
+
+> **Solution:** `documentation`, `code review`, `knowledge sharing`, `automation.`
