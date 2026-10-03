@@ -113,6 +113,7 @@ const components = {
     return (
       <Link
         href={href ?? "#"}
+        {...props}
         className="
           font-medium
           text-brand-cyan

@@ -19,15 +19,16 @@ const writings = [
   {
     number: "02",
     category: "Books",
-    title: "What Antifragile Taught Me About Building Resilient Systems",
+    title:
+      "How antifragile book change my thoughts about designing and maintaining software systems",
     description:
-      "Ideas about uncertainty, stress, and optionality—and how they changed the way I think about software systems.",
-    date: "Aug 2026",
-    readTime: "9 min read",
+      "Robust/Resilient software survive failure. Antifragile systems use failure as information and become better because of it.",
+    date: "Oct 2026",
+    readTime: "7 min read",
     icon: BookOpen,
     accent: "text-brand-violet",
     accentBg: "bg-brand-violet/10",
-    slug: "antifragile-resilient-systems",
+    slug: "antifragile-resilient-software-systems",
   },
   {
     number: "03",
