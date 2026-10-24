@@ -299,11 +299,13 @@ export default async function Page({ params }: PageProps) {
                       rounded-full
                       border
                       border-white/8
-                      bg-white/2.5
+                      bg-brand-violet/20
                       px-3
                       py-1.5
-                      text-[10px]
-                      text-muted-foreground
+                      text-[14px]
+                      font-bold
+                      font-mono
+                      text-white/70
                     "
                 >
                   #{tag}
@@ -332,15 +334,11 @@ export default async function Page({ params }: PageProps) {
               "
             >
               <Image
-                src={frontmatter?.cover}
-                alt=""
+                src={frontmatter.cover}
+                alt={frontmatter.title}
                 fill
                 priority
-                sizes="
-                  (max-width: 768px) 100vw,
-                  (max-width: 1280px) 90vw,
-                  1100px
-                "
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1100px"
                 className="object-cover"
               />
 

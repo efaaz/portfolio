@@ -94,6 +94,7 @@ export default async function Page({ params }: PageProps) {
 
   const formattedYear = book.year ? String(book.year) : null;
       const canonical = absoluteUrl(`/bookshelf/${book.slug}`);
+  const readingYear = book.readingYear ? String(book.readingYear) : null;
 
 const bookSchema = {
   "@context": "https://schema.org",
@@ -377,10 +378,16 @@ const breadcrumbSchema = {
                 text-muted-foreground/70
               "
             >
+              {readingYear && (
+                <div className="flex items-center gap-2">
+                  <CalendarDays size={13} />
+                  <span>Read in {readingYear}</span>
+                </div>
+              )}
               {formattedYear && (
                 <div className="flex items-center gap-2">
                   <CalendarDays size={13} />
-                  <span>Read in {formattedYear}</span>
+                  <span>Published in {formattedYear}</span>
                 </div>
               )}
 

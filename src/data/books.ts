@@ -52,7 +52,7 @@ export const books: BookType[] = [
       "The idea that stayed with me most was that resilience isn't always about resisting uncertainty. Some systems can actually improve because of it.",
 
     relatedWritingSlugs: [
-      "what-i-learned-from-antifragile",
+      "antifragile-resilient-software-systems",
     ],
 
     featured: true,

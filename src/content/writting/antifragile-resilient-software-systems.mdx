@@ -3,9 +3,10 @@ title: "How antifragile book change my thoughts about designing and maintaining 
 description: "Robust/Resilient software survive failure. Antifragile systems use failure as information and become better because of it."
 date: "2026-09-20"
 category: "Books"
+cover: "https://res.cloudinary.com/dxu0mzb32/image/upload/v1792859126/Antifragile_Software_Systems_rq5ieh.png"
 draft: false
 tags:
-  - Systems
+  - System Design
   - Decision Making
   - Software Engineering
 readingTime: "7 min"
@@ -17,7 +18,8 @@ Before reading [Antifragile](/bookshelf/antifragile), I thought building reliabl
 
 After reading the book that made me wonder: what would it look like to build software that doesn't just survive failure, but actually learns from it?
 
-This is is the core idea of this book's author Nassim Nicolas Taleb
+
+Before talking about the software, first I want to explain what what core idea of this book
 
 System can be fall into this three categories:
 
@@ -35,15 +37,20 @@ When a system can resist shocks and stress than stays the same.
 
 ### The Antifragile Concept
 
-Antifragile is beyond resilience and robustness. The resilient system resist shocks and stays the same where antifragile system gets stronger, more adaptive, or more capable because of stress. This property is behind everything that has changed with time.
+Antifragile is beyond resilience and robustness. The resilient system resist shocks and stays the same where antifragile system gets stronger, more adaptive, or more capable because of stress. This property is behind everything that has changed with time: evolution, culture, political system, technological innovation, economic success, corporate survival.
 
-For example:
+**For example:**
 
+> when a economic system fail, the economist's of the world gather information's of why it fails than fix the economic situation that's how the economy evolve. Economy is antifragile even if it breaks under shock it produce valuable information, than we learn from failure and make the system more antifragile.
+
+
+**Software can also categorize into 3 types of software systems:**
 > - **Fragile software** → one dependency failure takes down the application
 > - **Resilient software** → dependency failure is contained
 > - **Antifragile software** → the failure produces data, tests, architectural changes, automation, and improved behavior
 
 ## Core principles of building `Antifragile Software`
+Now we will look how we can build Antifragile software, that will not just survive failure but also learn from that failure make the software better of it.
 
 ### 1. Architecture should be able to change
 
@@ -140,3 +147,6 @@ Examples:
 - knowledge trapped in one person's head
 
 > **Solution:** `documentation`, `code review`, `knowledge sharing`, `automation.`
+
+
+**In the end, remind yourself that failure is not always the enemy, we should make software that fail is small ways than learn form that failure and make our software more adaptable, resilient and evolve over time, that what makes a software highly scalable & reliable.**

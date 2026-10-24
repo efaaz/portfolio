@@ -28,7 +28,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2">
           <span className="text-lg font-semibold tracking-tight text-foreground">
-            EFAZ
+            EFAAZ
           </span>
 
           <span className="h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
