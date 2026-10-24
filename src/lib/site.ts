@@ -19,7 +19,7 @@ export const siteConfig = {
 
   social: {
     github: "https://github.com/efaaz",
-    linkedin: "https://www.linkedin.com/in/wasifur-rahman-efaz/",
+    linkedin: "https://www.linkedin.com/in/wasifur-rahman-efaz",
   },
 } as const;
 
