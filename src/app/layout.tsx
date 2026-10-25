@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
   title: {
     default: siteConfig.title,
-    template: "%s | Efaz",
+    template: "%s | Wasifur Rahman Efaz",
   },
 
   description: siteConfig.description,
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         url: absoluteUrl("/images/og/default.jpg"),
         width: 1200,
         height: 630,
-        alt: "Efaz — Software Engineer",
+        alt: "Wasifur Rahman Efaz — Software Engineer",
       },
     ],
   },

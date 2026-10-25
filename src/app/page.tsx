@@ -11,7 +11,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
-  title: "Efaz — Software Engineer",
+  title: "Wasifur Rahman Efaz — Software Engineer",
 
   description:
     "I build software and study the systems behind it — technology, business, psychology, economics, and human behavior.",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         url: absoluteUrl("/images/og/default.jpg"),
         width: 1200,
         height: 630,
-        alt: "Efaz — Software Engineer",
+        alt: "Wasifur Rahman Efaz — Software Engineer",
       },
     ],
   },
